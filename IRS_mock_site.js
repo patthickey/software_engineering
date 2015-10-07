@@ -47,6 +47,14 @@ function validate_signup() {
 			document.getElementById("last_name").style.backgroundColor="#FF6666";
 			return false;
 		}
+
+		if(d_o_b.value=="") {
+			document.getElementById("d_o_b").focus();
+			document.getElementById("d_o_b").style.backgroundColor="#FF6666";
+			return false;
+		}
+
+
 		else{
 			$.ajax({
 		  	type: 'POST',

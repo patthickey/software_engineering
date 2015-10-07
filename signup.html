@@ -34,7 +34,10 @@
           Retype Password: <input type="password" name="password2" id="password2"> <br/>
           First Name: <input type="string" name="first_name" id="first_name"> <br/>
           Middle Name: <input type="string" name="middle_name" id="middle_name"> <br/>
-          Last Name: <input type="string" name="last_name" id="last_name"> <br/>                        
+          Last Name: <input type="string" name="last_name" id="last_name"> <br/>
+          Social Security Number: <input type="number" onKeyDown="textCounter(this,'message_count',10);"
+              onKeyUp="textCounter(this,'message_count',10)" name="SSN" id="SSN"> <br/>  
+          Date of Birth: <input type="date" name="d_o_b" id="d_o_b"> <br/>               
           <input type="submit" />
         </form>
         </fieldset>  
