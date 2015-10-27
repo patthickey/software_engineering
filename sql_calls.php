@@ -15,7 +15,6 @@ session_start();
 		  showerror();
 		$GLOBALS['$connected'] = True;
 	}
-	
  
 	function get_email($email)
 	{
@@ -25,8 +24,6 @@ session_start();
 		$result = mysql_query($sql);
 		return $result;
 	}
-
-
 	
 	function sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
@@ -51,6 +48,30 @@ session_start();
 		}
 		header('Location:index.html');
 	}
+
+	function sign_in($email, $password)
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+	// Searching the email address in the database
+		
+		$result = get_email($email);
+		$row = mysql_fetch_array($result);
+		$hash = $row["password"];  
+
+		//Unhashing the password to see if it matches what was entered.
+		if (password_verify($password, $hash)) {
+			$id = $row["id"];
+			$_SESSION['login_user'] = "$id"; // Initializing Session
+			header('Location:index.html');
+		} else {
+			echo '<script>';
+			echo 'alert("Password is invalid");';
+			echo 'location.href="index.html"';
+			echo '</script>';
+		}
+	}
+
 	
 
 ?>
