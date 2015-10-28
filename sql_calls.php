@@ -74,12 +74,11 @@ session_start();
 		if (password_verify($password, $hash)) {
 			$id = $row["id"];
 			$_SESSION['login_user'] = "$id"; // Initializing Session
-			
 
 			$privilege = get_privilege();
 			setcookie("user_id", $id);
 			setcookie("user_priv", $privilege);
-
+			
 			//session_id('$id');
 			session_start();
 			header('Location:index.html');
