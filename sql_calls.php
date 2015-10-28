@@ -24,6 +24,17 @@ session_start();
 		$result = mysql_query($sql);
 		return $result;
 	}
+
+	function get_privilege()
+	{		
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$id = $_SESSION['login_user'];
+		$sql = "SELECT privilege FROM users WHERE id='$id'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row["privilege"];
+	}	
 	
 	function sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
@@ -63,6 +74,14 @@ session_start();
 		if (password_verify($password, $hash)) {
 			$id = $row["id"];
 			$_SESSION['login_user'] = "$id"; // Initializing Session
+			
+
+			$privilege = get_privilege();
+			setcookie("user_id", $id);
+			setcookie("user_priv", $privilege);
+
+			//session_id('$id');
+			session_start();
 			header('Location:index.html');
 		} else {
 			echo '<script>';
@@ -71,7 +90,5 @@ session_start();
 			echo '</script>';
 		}
 	}
-
-	
 
 ?>
