@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
-        if(getCookie('user_priv') <= 2){
+        if(getCookie('user_priv') >= 2){
             $(".auditor").show()
         }else{
             $(".auditor").hide()
         } // this checks priviledge level and shows / hides auditor class things pending on priviledge
 
-        if(getCookie('user_priv') <= 3){
+        if(getCookie('user_priv') >= 3){
             $(".admin").show()
         }else{
             $(".admin").hide()

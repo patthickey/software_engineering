@@ -1,6 +1,7 @@
 <?php session_start();
 // Including file with SQL Calls!
-include 'sql_calls.php' ?> 
+include 'sql_calls.php' 
+?> 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,6 +27,10 @@ include 'sql_calls.php' ?>
     <div id="headerfile"></div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1 container">
+
+
+
+
         <div class = "panel panel-primary">
           <div class = "panel-heading">
             <h3 class = "panel-title">
@@ -51,7 +56,14 @@ include 'sql_calls.php' ?>
         ?>
 
 
-        <!-- ENTER YOUR STUFF HERE! -->
+        <?php
+        $name = get_name($_COOKIE['login_user']);
+        $user_info = get_user_data($_COOKIE['login_user']);
+
+
+
+
+
 
 
       </div>

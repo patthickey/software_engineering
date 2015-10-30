@@ -25,6 +25,15 @@ session_start();
 		return $result;
 	}
 
+	function get_ssn($ssn)
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM users WHERE SSN='$ssn'";
+		$result = mysql_query($sql);
+		return $result;
+	}	
+
 	function get_privilege()
 	{		
 		if ($GLOBALS['$connected'] == False) 
@@ -35,6 +44,7 @@ session_start();
 		$row = @ mysql_fetch_array($result);
 		return $row["privilege"];
 	}
+
 	function get_name()
 	{
 		if ($GLOBALS['$connected'] == False) 
@@ -44,7 +54,8 @@ session_start();
 		$row = @ mysql_fetch_array($result);
 		return $row["first_name"];
 	}
-	function get_user_data()
+
+	function get_user_data($user_id)
 	{	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -54,37 +65,28 @@ session_start();
 
 	}	
 
-/*
-	function display_message($message_call){
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$sql = "SELECT message FROM Messages WHERE message_call='$message_call'";
-		$result = mysql_query($sql);
-		$row = @ mysql_fetch_array($result);
-		echo $row["message"];
-		return $row["message"];		
-	}
- current not used */
-
-	
-	function sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
+	function sign_up($email, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
 
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 	// Searching the email address in the database
-		
-		$result = get_email($email_up);
-		$num_rows = mysql_num_rows($result);
+
+		$email_result = get_email($email);
+		$email_num_rows = mysql_num_rows($email_result);
+
+		$ssn_result = get_ssn($SSN);
+		$ssn_num_rows = mysql_num_rows($ssn_result);	
 
 	// Checking if the email address and adding accordingly, might need to check how that 1 is passed. Can't remember how to pass var
-		if($num_rows == 0){
-	    	$query = "INSERT INTO users (email, password, first_name, middle_name, last_name, SSN, date_of_birth, privilege, join_date) VALUES ('$email_up', '$hash', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b','$privilege', '$date')";
+		if(($email_num_rows == 0)&&($ssn_num_rows == 0)){
+	    	$query = "INSERT INTO users (email, password, first_name, middle_name, last_name, SSN, date_of_birth, privilege, join_date) VALUES ('$email', '$hash', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b','$privilege', '$date')";
 	    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
 	  	 	showerror();
+	  		send_email($email, "sign_up");
 		} else {
 			echo '<script>';
-			echo 'alert("Email is already registered");';
+			echo 'alert("Email or SNN is already registered");';
 			echo 'location.href="index.html"';
 			echo '</script>';
 		}
@@ -119,6 +121,27 @@ session_start();
 			echo 'location.href="index.html"';
 			echo '</script>';
 		}
+	}
+
+	function get_email_info($message_call){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM Messages WHERE message_call='$message_call'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row;		
+	}
+
+	function send_email($email, $message_call)
+	{
+		$to      = $email;
+		$email_info = get_email_info($message_call);
+		$subject = $email_info["subject"];
+		$message = $email_info["message"];
+		$headers = 'From: patthickey@gmail.com' . "\r\n" .
+		    'Reply-To: patthickey@gmail.com' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+		mail($to, $subject, $message, $headers);
 	}
 
 ?>
