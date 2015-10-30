@@ -1,17 +1,58 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
 
         if(getCookie('user_priv') == 2){
             $(".auditor").show()
         }else{
             $(".auditor").hide()
-        }
+        } // this checks priviledge level and shows / hides auditor class things pending on priviledge
 
         if(getCookie('user_priv') == 3){
             $(".admin").show()
         }else{
             $(".admin").hide()
+        }// this checks priviledge level and shows / hides admin class things pending on priviledge
+
+        if(getCookie('user_id') == null){
+        	$(".sign_in").show()
+            $(".sign_out").hide()
+        }else{
+        	$(".sign_in").hide()
+            $(".sign_out").show()
         }
-});
+
+}); //this entire block of code is contantly running. in it, we can add code that checks uppdates on a page (text change, etc.)*/
+
+function on_page_load() {
+
+        if(getCookie('user_priv') == 2){
+            $(".auditor").show()
+        }else{
+            $(".auditor").hide()
+        } // this checks priviledge level and shows / hides auditor class things pending on priviledge
+
+        if(getCookie('user_priv') == 3){
+            $(".admin").show()
+        }else{
+            $(".admin").hide()
+        }// this checks priviledge level and shows / hides admin class things pending on priviledge
+
+        if(getCookie('user_id') == null){
+        	$(".sign_in").show()
+            $(".sign_out").hide()
+        }else{
+        	$(".sign_in").hide()
+            $(".sign_out").show()
+        }
+
+        /*
+        var x = document.getElementsByClassName("redirect_page");
+		for (var i = 0; i < x.length; i++) {
+			alert(x[i]);
+		}
+		*/
+
+
+}
 
 
 // START OF INPUT VALIDATON -----------------------------------
@@ -111,6 +152,12 @@ function validate_signin() {
 }
 
 // END OF INPUT VALIDATON -----------------------------------
+
+
+
+
+
+// -----------------------------------------------------------
 
 function textCounter(field, cnt, maxlimit) {         
 var cntfield = document.getElementById(cnt) 
