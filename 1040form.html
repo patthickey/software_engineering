@@ -30,12 +30,12 @@
       <!-- Title of the Form document-->
       <h1>Form 1040 <small>U.S. Individual Income Tax Return</small></h1>
       <div class = "line-separator"></div>
-      <hr width="95%" size="8" align="left">
+      <hr width="99%" size="10" align="left">
       <br>
 
       <!-- Main User -->
       <form class = "form-inline">
-        <div class = "form-group", >
+        <div class = "form-group">
           <label for ="fName">First Name </label>
           <input type = "text" class = "form-control" id="fName" placeholder ="First Name">
         </div>
@@ -51,7 +51,7 @@
         </div>
 
          <div class = "form-group">
-          <label for = "SSN">Social Security Number </label>
+          <label for = "SSN">Social Security Number</label>
           <input type = "number" class = "form-control" id="SSN" placeholder ="000-00-0000">
          </div>
       </form>
@@ -74,34 +74,34 @@
           <input type = "number" class = "form-control"id= "aptNo" placeholder ="Apt No.">
         </div>
       </form>
-    <br>
+      <br>
 
       <!-- Form line in which holds Fields for Spouse's first name, middle intitial, last name, and SSN -->
       <form class="form-inline">
         <div class = "form-group">
           <label for = "SpFName">Spouse's First Name </label>
-          <input type = "text" class = "form-control" id = "SpFName" placeholder = " Spouse's First Name">
+          <input type = "text" class = "form-control" id = "SpFName" placeholder = "Spouse's First Name">
         </div>
 
         <div class = "form-group">
           <label for = "SpMidInit">  Middle Initial </label>
-          <input type = "text" class = "form-control" id = "SpMidInit" placeholder = " Spouse's Middle Initial">
+          <input type = "text" class = "form-control" id = "SpMidInit" placeholder = "Spouse's Middle Initial">
         </div>
         <div class = "form-group">
           <label for = "SpLName"> Last Name </label>
-          <input type = "text" class = "form-control" id = "SpLName" placeholder = " Spouse's Last Name">
+          <input type = "text" class = "form-control" id = "SpLName" placeholder = "Spouse's Last Name">
         </div>
         <div class = "form-group">
           <label for = "SpSSN">  Spouse's SSN </label>
-          <input type = "number" class = "form-control" id = "SpSSN" placeholder = " 000-00-0000" >
+          <input type = "number" class = "form-control" id = "SpSSN" placeholder = "000-00-0000" >
         </div>
       </form>
-    <br>
+      <br>
 
     <!-- Form line in which holds Fields for residents who live out of the country (includes City, town, state, country name, etc.)-->
       <form class = "form-group">
         <div class = "form-group">
-          <label for = "CityTown"> City, Town or post office, state, and ZIP code. If you have a foreign address, also complete spaces below(see instructions) </label>
+          <label for = "CityTown"> City, Town or post office, state, and ZIP code. If you have a foreign address, also complete spaces below(see instructions)</label>
           <input type = "text" class = "form-control" id = "CityTown" placeholder = "City, Town or post office, state, and ZIP code.">
         </div>
       </form>
@@ -123,28 +123,27 @@
 
       <!--Filing Status -->
       <h2>Filing Status</h2>
-      <br>
+
 
      <div class="checkbox1">
        <label>
        <input type="checkbox" value="">
         Single.
-      </label>
+       </label>
      </div>
 
      <div class="checkbox1">
        <label>
        <input type="checkbox" value="">
         Married filing jointly (even if only one had income)
-      </label>
+       </label>
      </div>
 
-    <div class="checkbox1">
+     <div class="checkbox1">
        <label>
        <input type="checkbox" value="">
         Married filing separately.  Enter spouse’s SSN above and full name here.  <input type="text" class="form-control" placeholder="Spouse's SSN & Full Name">
-      </label>
-
+       </label>
      </div>
 
      <div class="checkbox1">
@@ -152,21 +151,145 @@
        <input type="checkbox" value="">
         Head of household (with qualifying person). (See instructions.) If the qualifying person is a child but not your dependent, enter this child’s name here.
         <input type="text" class="form-control" placeholder="Child's Full Name">
-      </label>
+        </label>
      </div>
 
      <div class="checkbox1">
        <label>
        <input type="checkbox" value="">
         Qualifying widow(er) with dependent child
-      </label>
+       </label>
      </div>
     
 
     <!-- Exemptions -->
-    <h3>Exemptions</h3>
-    <br>
+    <h2>Exemptions</h2>
 
+       <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">
+          <b>Yourself</b>. If someone can claim you as a dependent, do not check box 
+        </label>
+       </div>
+
+       <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">
+          <b>Spouse</b>
+         </label>
+       </div>
+
+
+      <table class="table-condensed">
+      <h4>Dependents</h4>
+
+        <tr>
+          <th> First & Last Name</th>
+          <th> Dependent's SSN</th>
+          <th> Relationship to You </th>
+        </tr>
+        <tr>
+         <td><input type="text" class="form-control" placeholder="First & Last Name"></td>
+         <td><input type="number" class="form-control" placeholder="Dependent's SSN"></td>
+         <td><input type="text" class="form-control" placeholder="Relationship to You"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="form-control" placeholder="First & Last Name"></td>
+          <td><input type="number" class="form-control" placeholder="Dependent's SSN"></td>
+          <td><input type="text" class="form-control" placeholder="Relationship to You"></td>
+        </tr>
+        <tr>
+         <td><input type="text" class="form-control" placeholder="First & Last Name"></td>
+         <td><input type="number" class="form-control" placeholder="Dependent's SSN"></td>
+         <td><input type="text" class="form-control" placeholder="Relationship to You"></td>
+        </tr>
+        <tr>
+         <td><input type="text" class="form-control" placeholder="First & Last Name"></td>
+         <td><input type="number" class="form-control" placeholder="Dependent's SSN"></td>
+         <td><input type="text" class="form-control" placeholder="Relationship to You"></td>
+        </tr>
+        <tr>
+         <td><input type="text" class="form-control" placeholder="First & Last Name"></td>
+         <td><input type="number" class="form-control" placeholder="Dependent's SSN"></td>
+         <td><input type="text" class="form-control" placeholder="Relationship to You"></td>
+        </tr>
+    </table>
+    <br>
+	
+	<!-- Income -->
+	<h2> Income </h2>
+	 <h3> Attach Forms(s) W-2 here. Also attach Forms W-2G and 1099-R if tax was withheld </h3>
+	  <p> If you did not get a W-2 see instructions.</p>
+	  <br>
+
+	<form class = "form-group">
+		<div class = "form-group">
+			<label for = "Wages">7 Wages, salaries, tips, etc. Attach Form(s) W-2</label>
+      <input type = "text" class = "form-control" id = "wages" placeholder = "Wages, salaries, tips, etc. Attach Form(s) W-2">
+    </div>
+
+    <div class = "form-group">
+			 <label for = "taxable">8a Taxable Interest. Attach Schedule B if required</label>
+       <input type = "text" class = "form-control" id = "taxable" placeholder = "Attach Schedule B if required">
+    </div>
+
+    <div class = "form-group">
+			 <label for = "taxex">b Tax-exempt interes. Do not include on line 8a</label>
+       <input type = "text" class = "form-control" id = "taxex" placeholder = "Wages, salaries, tips, etc. Attach Form(s) W-2">
+    </div>
+
+    <div class = "form-group">
+			 <label for = "taxrefund">9 Taxable refunds, credits, or offsets Wages, salaries, tips, etc. Attach Form(s) W-2</label>
+       <input type = "text" class = "form-control" id = "wages" placeholder = "Wages, salaries, tips, etc. Attach Form(s) W-2">
+    </div>
+        
+
+  <!--User Signature, Date, Occupation, and Submit Form Button -->
+  <h2>Signature</h2>
+
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="Signature">Signature</label>
+          <input type="text" class="form-control" id="exampleSignature" placeholder="Signature">
+        </div>
+        <div class="form-group">
+          <label for="exampleDate">Date</label>
+          <input type="date" class="form-control" id="exampleDate" placeholder="Date">
+        </div>
+        <div class="form-group">
+          <label for="exampleOccupation">Occupation</label>
+          <input type="text" class="form-control" id="exapleOccupation" placeholder="Occupation">
+        </div>
+      </form>
+
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="SpSignature">Spouse's Signature</label>
+          <input type="text" class="form-control" id="exampleSpSignature" placeholder="Spouse's Signature">
+        </div>
+        <div class="form-group">
+          <label for="exampleDate">Date</label>
+          <input type="date" class="form-control" id="exampleDate" placeholder="Date">
+        </div>
+         <div class="form-group">
+          <label for="SpOccupation">Spouse's Occupation</label>
+          <input type="text" class="form-control" id="exampleSpOccupation" placeholder="Spouse's Occupation">
+        </div>
+      </form>
+      <br>
+ 
+
+      <button type="button" class="btn btn-primary btn-lg btn-block">Submit 1040 Form</button>
+      <button type="button" class="btn btn-default btn-lg btn-block">Clear 1040 Form</button>
+
+
+
+	   <div>
+	
+
+   
+    <table style="width:100%">
+  
 
 
     </div>
