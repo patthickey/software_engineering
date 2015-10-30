@@ -5,3 +5,7 @@
 #footerfile {
 	padding-top: 4em;
 }
+
+.sign_in, .sign_out, .auditor, .admin {
+	display:none; 
+}
