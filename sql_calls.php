@@ -53,6 +53,19 @@ session_start();
 		return $info; 
 
 	}	
+
+/*
+	function display_message($message_call){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT message FROM Messages WHERE message_call='$message_call'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		echo $row["message"];
+		return $row["message"];		
+	}
+*/
+
 	
 	function sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
