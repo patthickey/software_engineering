@@ -144,4 +144,39 @@ session_start();
 		mail($to, $subject, $message, $headers);
 	}
 
+	function get_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM tax_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["tax_rate"]}</td>
+		<td>{$row["single_filer_low"]}</td>
+		<td>{$row["single_filer_high"]}</td>
+		<td>{$row["married_filing_together_low"]}</td>
+		<td>{$row["married_filing_together_high"]}</td>
+		<td>{$row["married_filing_seperate_low"]}</td>
+		<td>{$row["married_filing_seperate_high"]}</td>
+		<td>{$row["head_of_household_low"]}</td>
+		<td>{$row["head_of_household_high"]}</td>
+		";
+		echo"</tr>";
+		}				
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
