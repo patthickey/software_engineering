@@ -46,7 +46,7 @@ session_start();
 		echo $row["message"];
 		return $row["message"];		
 	}
-*/
+ current not used */
 
 	
 	function sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
