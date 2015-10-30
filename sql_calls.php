@@ -34,6 +34,24 @@ session_start();
 		$result = mysql_query($sql);
 		$row = @ mysql_fetch_array($result);
 		return $row["privilege"];
+	}
+	function get_name()
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT first_name FROM users WHERE email='$email'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row["first_name"];
+	}
+	function get_user_data()
+	{	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$user_info = "SELECT first_name, middle_name, last_name, email, date_of_birth FROM users WHERE email='$email'";
+		$info = mysql_fetch_array($user_info);
+		return $info; 
+
 	}	
 
 /*
