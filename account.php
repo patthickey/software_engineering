@@ -1,7 +1,7 @@
-<?php session_start();
-// Including file with SQL Calls!
-include 'sql_calls.php' 
-?> 
+<?php session_start(); 
+include 'sql_calls.php';
+$user = $_COOKIE['login_user'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,43 +28,20 @@ include 'sql_calls.php'
     <div class="row">
       <div class="col-md-10 col-md-offset-1 container">
 
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>FIRST NAME</th><th>MIDDLE NAME</th><th>LAST NAME</th>
+        <th>EMAIL</th><th>DATE OF BIRTH</th>
+        </tr>
 
-
-
-        <div class = "panel panel-primary">
-          <div class = "panel-heading">
-            <h3 class = "panel-title">
         <?php
-          $name = get_name();
-          $user_info = get_user_data();
-
-
-                  echo "<strong> $name </strong> </h3>
-                        </div>
-                        <div class = ""panel-body"">"
-                        while ($row = @ mysql_fetch_array($user_info)) {
-                          echo "{$row["first_name"]} , {$row["middle_name"]} , {$row["last_name"]}, {$row["email"]} , {$row["date_of_birth"]}
-                          </div>
-                          </div>"
-
-
-
-
-
-                        }
-
+        $user = $_COOKIE["user_id"];
+        print_user_data($user); 
         ?>
 
-
-        <?php
-        $name = get_name($_COOKIE['login_user']);
-        $user_info = get_user_data($_COOKIE['login_user']);
-
-
-
-
-
-
+        </table>
+        </div>
 
       </div>
     </div>

@@ -59,7 +59,7 @@ session_start();
 	{	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$user_info = "SELECT first_name, middle_name, last_name, email, date_of_birth FROM users WHERE email='$email'";
+		$user_info = "SELECT first_name, middle_name, last_name, email, date_of_birth FROM users WHERE id='$user_id'";
 		$info = mysql_fetch_array($user_info);
 		return $info; 
 
@@ -166,17 +166,23 @@ session_start();
 		}				
 	}
 
-
-
-
-
-
-
-
-
-
-
-
+	function print_user_data($user_id){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT first_name, middle_name, last_name, email, date_of_birth FROM users WHERE id='$user_id'";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["first_name"]}</td>
+		<td>{$row["middle_name"]}</td>
+		<td>{$row["last_name"]}</td>
+		<td>{$row["email"]}</td>
+		<td>{$row["date_of_birth"]}</td>
+		";
+		echo"</tr>";
+		}
+	}
 
 
 ?>
