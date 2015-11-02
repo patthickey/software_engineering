@@ -22,9 +22,10 @@ include 'sql_calls.php';?>
 
 
   <body>
-    <div id="headerfile"></div>
+    <div id="headerfile"></div>   
+    <div class="container-fluid"> 
     <div class="row">
-      <div class="col-md-10 col-md-offset-1 container">
+      <div class="col-md-10 col-md-offset-1">
 
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
@@ -42,6 +43,7 @@ include 'sql_calls.php';?>
         </div>
 
       </div>
+    </div>
     </div>
     <div id="footerfile"></div>
 
