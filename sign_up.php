@@ -14,5 +14,6 @@ $date = date('Y-m-d');
 $privilege = 1; 
 	
 	sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date);
+	sign_in($email_up, $password1);
 
 ?>

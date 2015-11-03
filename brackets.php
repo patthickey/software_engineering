@@ -1,4 +1,5 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'sql_calls.php';?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,40 +22,28 @@
 
 
   <body>
-    <div id="headerfile"></div>
+    <div id="headerfile"></div>   
+    <div class="container-fluid"> 
     <div class="row">
-      <div class="col-md-10 col-md-offset-1 container">
+      <div class="col-md-10 col-md-offset-1">
 
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>SINGLE FILER (low)</th><th>SINGLE FILER (high)</th>
+        <th>MARRIED FILING TOGETHER (low)</th><th>MARRIED FILING TOGETHER (high)</th>
+        <th>MARRIED FILING SEPERATE (low)</th><th>MARRIED FILING SEPERATE (high)</th>
+        <th>HEAD OF HOUSEHOLD (low)</th><th>HEAD OF HOUSEHOLD (high)</th>
+        </tr>
 
-        <fieldset>
-        <form action="sign_up.php" method="post" onsubmit="return validate_signup();">
-          <legend>sign up</legend>
-          Email address: <input type="email" name="email_up" id="email_up"> <br/>
-          Password: <input type="password" name="password1" id="password1"> <br/>
-          Retype Password: <input type="password" name="password2" id="password2"> <br/>
-          First Name: <input type="string" name="first_name" id="first_name"> <br/>
-          Middle Name: <input type="string" name="middle_name" id="middle_name"> <br/>
-          Last Name: <input type="string" name="last_name" id="last_name"> <br/>
-          Social Security Number: <input type="number" onKeyDown="textCounter(this,'message_count',10);"
-              onKeyUp="textCounter(this,'message_count',10)" name="SSN" id="SSN"> <br/>  
-          Date of Birth: <input type="date" name="d_o_b" id="d_o_b"> <br/>               
-          <input type="submit" />
-        </form>
-        </fieldset>  
+        <?php get_tax_brackets(); ?>
 
-        <br/>
-
-        <fieldset>
-        <form action="sign_in.php" method="post" onsubmit="return validate_signin();">
-          <legend>sign in</legend>
-          Email address: <input type="email" name="email_in" id="email_in"> <br/>
-          Password: <input type="password" name="password3" id="password3"> <br/>  
-          <input type="submit" />
-        </form>
-        </fieldset>  
-
+        </table>
+        </div>
 
       </div>
+    </div>
     </div>
     <div id="footerfile"></div>
 
