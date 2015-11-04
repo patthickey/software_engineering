@@ -1,4 +1,4 @@
-/*$(document).ready(function(){
+$(document).ready(function(){
 
         if(getCookie('user_priv') == 2){
             $(".auditor").show()
@@ -20,39 +20,45 @@
             $(".sign_out").show()
         }
 
-}); //this entire block of code is contantly running. in it, we can add code that checks uppdates on a page (text change, etc.)*/
+}); //this entire block of code is contantly running. in it, we can add code that checks uppdates on a page (text change, etc.)
 
 function on_page_load() {
 
-        if(getCookie('user_priv') == 2){
-            $(".auditor").show()
-        }else{
-            $(".auditor").hide()
-        } // this checks priviledge level and shows / hides auditor class things pending on priviledge
-
-        if(getCookie('user_priv') == 3){
-            $(".admin").show()
-        }else{
-            $(".admin").hide()
-        }// this checks priviledge level and shows / hides admin class things pending on priviledge
-
-        if(getCookie('user_id') == null){
-        	$(".sign_in").show()
-            $(".sign_out").hide()
-        }else{
-        	$(".sign_in").hide()
-            $(".sign_out").show()
-        }
-
-        /*
-        var x = document.getElementsByClassName("redirect_page");
-		for (var i = 0; i < x.length; i++) {
-			alert(x[i]);
+ 	var signed_in = document.getElementsByClassName("igned_in");
+	if(signed_in[0] != null)
+	{
+        if(getCookie('user_id') == null){		
+			window.location.replace("http://project.patthickey.com");	
 		}
-		*/
+	} // using the css class "sign_in" will only allow pages to load if a user is signed in
 
+ 	var not_signed_in = document.getElementsByClassName("not_signed_in");
+	if(not_signed_in[0] != null)
+	{
+        if(getCookie('user_id') != null){		
+			window.location.replace("http://project.patthickey.com");	
+		}
+	} // using the css class "not_sign_in" will only allow pages to load if a user is NOT signed in
+
+ 	var admin_privilege = document.getElementsByClassName("admin_privilege");
+	if(admin_privilege[0] != null)
+	{
+        if(getCookie('user_priv') != 3){
+			window.location.replace("http://project.patthickey.com");	
+		}
+	} // using the css class "admin_privilege" will only allow pages to load if a user is an admin
+
+ 	var auditor_privilege = document.getElementsByClassName("auditor_privilege");
+	if(auditor_privilege[0] != null)
+	{
+        if((getCookie('user_priv') != 2)||(getCookie('user_priv') != 3)){
+			window.location.replace("http://project.patthickey.com");	
+		}
+	}	// using the css class "auditor_privilege" will only allow pages to load if a user is an auditor or admin
 
 }
+
+
 
 
 // START OF INPUT VALIDATON -----------------------------------
@@ -150,6 +156,18 @@ function validate_signin() {
 			return true;
 		}
 }
+
+function all_privilege_search() {
+
+	if((search_email.value=="All")||(search_email.value=="all")||(search_email.value=="Email")||(search_email.value=="")) {
+		search_email.value = "%%";
+	}
+
+	else {
+		return true;
+	}
+}
+
 
 // END OF INPUT VALIDATON -----------------------------------
 
