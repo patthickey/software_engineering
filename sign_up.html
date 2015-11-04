@@ -20,14 +20,13 @@
   </head>
 
 
-  <body class="not_signed_in" onload="on_page_load();">
-    <div id="headerfile"></div>   
-    <div class="container-fluid"> 
+  <body class="redirect_page" onload="on_page_load();">
+    <div id="headerfile"></div>
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-10 col-md-offset-1 container">
 
-      <!--
-        <fieldset>
+
+        <fieldset class="sign_in">
         <form action="sign_up.php" method="post" onsubmit="return validate_signup();">
           <legend>sign up</legend>
           Email address: <input type="email" name="email_up" id="email_up"> <br/>
@@ -43,56 +42,11 @@
         </form>
         </fieldset>  
 
-        old ^^^^ 
         <br/>
-      -->
-
-        <form action="sign_up.php" method="post" onsubmit="return validate_signup();">
-          <legend>sign up</legend>
-          <div class="form-group">
-            <label for="email_up">Email Address</label>
-            <input type="email" class="form-control" name="email_up" id="email_up" placeholder="Email">
-          </div>
-          <div class="form-group">
-            <label for="password1">Password</label>
-            <input type="password" class="form-control" name="password1" id="password1" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <label for="password2">Retype Password</label>
-            <input type="password" class="form-control" name="password2" id="password2" placeholder="Retype assword">
-          </div>
-          <div class="form-group">
-            <label for="first_name">First Name</label>
-            <input type="string" class="form-control" name="first_name" id="first_name" placeholder="First name">
-          </div>
-          <div class="form-group">
-            <label for="middle_name">Middle Name</label>
-            <input type="string" class="form-control" name="middle_name" id="middle_name" placeholder="Middle name">
-          </div>
-          <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input type="string" class="form-control" name="last_name" id="last_name" placeholder="Last name">
-          </div>
-          <div class="form-group">
-            <label for="SSN">Social Security Number</label>
-            <input type="number" onKeyDown="textCounter(this,'message_count',10);"
-              onKeyUp="textCounter(this,'message_count',10)" class="form-control" name="SSN" id="SSN" placeholder="Social Security Number">
-          </div>
-          <div class="form-group">
-            <label for="d_o_b">Email Address</label>
-            <input type="date" class="form-control" name="d_o_b" id="d_o_b" placeholder="Date of bith">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
 
       </div>
-    </div>  
     </div>
-
     <div id="footerfile"></div>
-
-
-
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
