@@ -156,7 +156,7 @@ session_start();
 		echo"<tr>";
 		echo"
 		<td>{$row["tax_rate"]}</td>
-		<td>{$row["income_low"] to $row["income_high"]}</td>
+		<td>{$row["income_low"]} to {$row["income_high"]}</td>
 		";
 		echo"</tr>";
 		}				
