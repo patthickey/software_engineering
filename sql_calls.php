@@ -202,4 +202,59 @@ session_start();
 	}
 
 
+	function admin_print_user_data($email/*, $privilege*/){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
+		$result = mysql_query($sql);
+		echo'<form name="update_form" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo'<input type="hidden" name="user_id[]" value='.$row["id"].' readonly>';				
+		echo"
+		<td>{$row["first_name"]}</td>
+		<td>{$row["last_name"]}</td>
+		<td>{$row["email"]}</td>
+		<td>{$row["privilege"]}</td>
+		";
+
+		echo'<td>
+			<div class="form-group">
+            <select class="form-control" name="update_privilege[]">
+                <option value='.$row["privilege"].'>Current</option>      	
+             	<option value="1">1</option>
+            	<option value="2">2</option>
+            	<option value="3">3</option>
+            </select>
+          	</div>
+          	</td>';
+
+		echo"</tr>";
+		}
+
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+		<input type="reset" value="reset checks" type="button" class="btn btn-danger" style="right:0px"></div> 
+		</form>';
+
+		// if form has been submitted, process it
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+		   foreach($_POST['user_id'] as $value)
+		       {
+
+		       			$update = $_POST['update_privilege'][$i];
+
+		       $sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
+			   }   
+		}
+		// redirect user
+		$_SESSION['success'] = 'Updated';
+		header("location:index.php");
+		
+	}
+
+
+
 ?>
