@@ -10,6 +10,5 @@ if (isset($_SERVER['HTTP_COOKIE'])) {
         setcookie($name, '', time()-1000, '/');
     }
 }
-header("Location: http://project.patthickey.com");
-die();
+echo 'You have been logged out. <a href="/">Go back</a>';
 ?>
