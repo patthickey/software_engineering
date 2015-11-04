@@ -166,6 +166,21 @@ session_start();
 		}				
 	}
 
+	function get_commercial_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["tax_rate"]}</td>
+		<td>{$row["income_low"] to $row["income_high"]}</td>
+		";
+		echo"</tr>";
+		}				
+	}
+
 	function print_user_data($user_id){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();

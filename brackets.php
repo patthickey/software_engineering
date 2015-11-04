@@ -27,6 +27,7 @@ include 'sql_calls.php';?>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
+        <span class="label label-success">Individual</span>
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
         <tr>
@@ -38,6 +39,19 @@ include 'sql_calls.php';?>
         </tr>
 
         <?php get_tax_brackets(); ?>
+
+        </table>
+        </div>
+
+        <span class="label label-success">Commercial</span>
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>Income Range</th>
+        </tr>
+
+        <?php get_commercial_tax_brackets(); ?>
 
         </table>
         </div>
