@@ -42,6 +42,7 @@ include 'sql_calls.php';?>
 
         </table>
         </div>
+
         <h3> Commercial </h3>
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
@@ -52,6 +53,20 @@ include 'sql_calls.php';?>
         </tr>
 
         <?php get_commercial_tax_brackets(); ?>
+
+        </table>
+        </div>
+
+        <h3> Small Business </h3>
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>Income</th>
+        
+        </tr>
+
+        <?php get_smallbiz_tax_brackets(); ?>
 
         </table>
         </div>
