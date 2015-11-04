@@ -29,7 +29,7 @@
 
       <div = "container-fluid">
       <!-- Title of the Form document-->
-      <h1>Form 1120-W <small>U.S. Individual Income Tax Return</small></h1>
+      <h1>Form 1120-W <small>Estimated Tax for Corporation</small></h1>
       <div class = "line-separator"></div>
       <hr width="99%" size="10" align="left">
       <br>
@@ -64,39 +64,54 @@
       <br>
 
 
-        <h2> Income </h2>
-        <br>
+      <h2> Income </h2>
+      <br>
 
-        <form class = "form-group">
-          <div class = "form-group">
+      <form class = "form-group">
+        <div class = "form-group">
           <label for = "Gross Income">Gross Income</label>
           <input type = "text" class = "form-control" id = "gross" placeholder = "Gross Income">
         </div>
 
-       <div class = "form-group">
-        <label for = "taxable">8a Taxable Interest. Attach Schedule B if required</label>
-        <input type = "text" class = "form-control" id = "taxable" placeholder = "Attach Schedule B if required">
-      </div>
+        <div class = "form-group">
+          <label for = "taxable">8a Taxable Interest. Attach Schedule B if required</label>
+          <input type = "text" class = "form-control" id = "taxable" placeholder = "Attach Schedule B if required">
+        </div>
 
-       <div class = "form-group">
-        <label for = "taxex">b Tax-exempt Interest. Do not include on line 8a</label>
-        <input type = "text" class = "form-control" id = "taxex" placeholder = "Tax-exempt">
-       </div>
+        <div class = "form-group">
+          <label for = "taxex">b Tax-exempt Interest. Do not include on line 8a</label>
+          <input type = "text" class = "form-control" id = "taxex" placeholder = "Tax-exempt">
+        </div>
 
-       <div class = "form-group">
-         <label for = "taxrefund">9 Taxable refunds, credits, or offsets Wages, salaries, tips, etc. Attach Form(s) W-2</label>
-         <input type = "text" class = "form-control" id = "wages" placeholder = "Tax refund">
-      </div>
-
+        <div class = "form-group">
+          <label for = "taxrefund">9 Taxable refunds, credits, or offsets Wages, salaries, tips, etc. Attach Form(s) W-2</label>
+          <input type = "text" class = "form-control" id = "wages" placeholder = "Tax refund">
+        </div>
       </form>
 
+      <!--User Signature, Date, Occupation, and Submit Form Button -->
+      <h2>Signature</h2>
 
-      </div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="Signature">Signature</label>
+          <input type="text" class="form-control" id="exampleSignature" placeholder="Signature">
+        </div>
+        <div class="form-group">
+          <label for="exampleDate">Date</label>
+          <input type="date" class="form-control" id="exampleDate" placeholder="Date">
+        </div>
+        <div class="form-group">
+          <label for="exampleOccupation">Title of Signee</label>
+          <input type="text" class="form-control" id="exampleTitle" placeholder="Title of Signee">
+        </div>
+      </form>
+      <br>
 
-
+      <!-- Submit And Clear Form -->
+      <button type="button" class="btn btn-primary btn-lg btn-block">Submit 1040 Form</button>
+      <button type="button" class="btn btn-default btn-lg btn-block">Clear 1040 Form</button>
       
-    </div>
-    </div>
     <div id="footerfile"></div>
 
     <script>
