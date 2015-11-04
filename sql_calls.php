@@ -153,14 +153,10 @@ session_start();
 		echo"<tr>";
 		echo"
 		<td>{$row["tax_rate"]}</td>
-		<td>{$row["single_filer_low"]}</td>
-		<td>{$row["single_filer_high"]}</td>
-		<td>{$row["married_filing_together_low"]}</td>
-		<td>{$row["married_filing_together_high"]}</td>
-		<td>{$row["married_filing_seperate_low"]}</td>
-		<td>{$row["married_filing_seperate_high"]}</td>
-		<td>{$row["head_of_household_low"]}</td>
-		<td>{$row["head_of_household_high"]}</td>
+		<td>{$row["single_filer_low"]} to {$row["single_filer_high"]}</td>
+		<td>{$row["married_filing_together_low"]} to {$row["married_filing_together_high"]}</td>
+		<td>{$row["married_filing_seperate_low"]} to {$row["married_filing_seperate_high"]}</td>
+		<td>{$row["head_of_household_low"]} to {$row["head_of_household_high"]}</td>
 		";
 		echo"</tr>";
 		}				

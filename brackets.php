@@ -27,17 +27,31 @@ include 'sql_calls.php';?>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
+        <h3> Individual </h3>
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
         <tr>
         <th>TAX RATE by %</th>
-        <th>SINGLE FILER (low)</th><th>SINGLE FILER (high)</th>
-        <th>MARRIED FILING TOGETHER (low)</th><th>MARRIED FILING TOGETHER (high)</th>
-        <th>MARRIED FILING SEPERATE (low)</th><th>MARRIED FILING SEPERATE (high)</th>
-        <th>HEAD OF HOUSEHOLD (low)</th><th>HEAD OF HOUSEHOLD (high)</th>
+        <th>SINGLE FILER</th>
+        <th>MARRIED FILING TOGETHER</th>
+        <th>MARRIED FILING SEPERATE</th>
+        <th>HEAD OF HOUSEHOLD</th>
         </tr>
 
         <?php get_tax_brackets(); ?>
+
+        </table>
+        </div>
+        <h3> Commercial </h3>
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>Income</th>
+        
+        </tr>
+
+        <?php get_commercial_tax_brackets(); ?>
 
         </table>
         </div>
