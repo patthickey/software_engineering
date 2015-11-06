@@ -1,6 +1,7 @@
 <?php session_start(); 
 include 'sql_calls.php';
-$user = $_COOKIE['login_user'];
+$search_email = $_POST['search_email'];
+//$privilege_level = $_POST['privilege_level'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,7 @@ $user = $_COOKIE['login_user'];
   </head>
 
 
-  <body>
+  <body class="admin_privilege" onload="on_page_load();">
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
     <div class="row">
@@ -32,19 +33,15 @@ $user = $_COOKIE['login_user'];
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
         <tr>
-        <th>FIRST NAME</th><th>MIDDLE NAME</th><th>LAST NAME</th>
-        <th>EMAIL</th><th>DATE OF BIRTH</th>
-        </tr>
+        <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>DATE OF BIRTH</th>
 
         <?php
         $user = $_COOKIE["user_id"];
-        print_user_data($user); 
+        account_print_user_data($user);
         ?>
 
         </table>
         </div>
-
-        <a class="btn btn-default" href="change_account_info.php" role="button">Click here to update account information</a>
 
       </div>
     </div>

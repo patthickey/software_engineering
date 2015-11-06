@@ -266,6 +266,96 @@ session_start();
 		header("location:index.php");
 		
 	}
+	function account_print_user_data($id){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM users WHERE id='$id'";
+		$result = mysql_query($sql);
+		echo'<form name="update_form" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		//echo'<input type="hidden" name="user_id[]" value='.$row["id"].' readonly>';				
+		echo'
+		<tr>
+		<td>
+			<div class="form-group">
+    		<input type="text" class="form-control" name = fname id="fname" placeholder='.$row["first_name"].'>
+  			</div>
+		</td>
+		<td>
+			<div class="form-group">
+    		<input type="text" class="form-control" name = lname id="lname" placeholder='.$row["last_name"].'>
+  			</div>
+		</td>
+		<td>
+			<div class="form-group">
+    		<input type="text" class="form-control" name = email id="email" placeholder='.$row["email"].'>
+  			</div>
+		</td>
+		<td>
+			<div class="form-group">
+    		<input type="text" class="form-control" name = date_of_birth id="date_of_birth" placeholder='.$row["date_of_birth"].'>
+  			</div>
+  		</td>
+		</tr>
+		';
+
+		
+		echo"</tr>";
+		}
+
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+		</div> 
+		</form>';
+
+		// if form has been submitted, process it
+		$sql = "SELECT * FROM users WHERE id='$id'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		if($_POST["Submit"])
+		{	
+			
+
+			if( $_POST["fname"] != NULL) {
+				
+				$fname = $_POST["fname"];
+			} else {
+				
+				$fname = $row["first_name"];
+			  }
+			if( $_POST["lname"] != NULL) {
+					
+				$lname = $_POST["lname"];
+			} else {
+
+				$lname = $row["last_name"];
+			  }
+			if( $_POST["email"] != NULL) {	
+				$email = $_POST["email"];
+			} else {
+				$email = $row["email"];
+			  }
+			if( $_POST["date_of_birth"] != NULL) {	
+				$date_of_birth = $_POST["date_of_birth"];
+			} else {
+				$date_of_birth = $row["date_of_birth"];
+			  }
+
+		    $sql1 = mysql_query("UPDATE users SET first_name = '$fname' , last_name = '$lname' , email = '$email' , date_of_birth = '$date_of_birth'  WHERE id= '$id'") or die(mysql_error());
+		    
+				
+			  
+
+			
+		}   
+		
+		// redirect user
+		$_SESSION['success'] = 'Updated';
+		header("location:index.php");
+		
+		
+	}
+
 
 
 
