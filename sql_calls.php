@@ -84,6 +84,7 @@ session_start();
 	    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
 	  	 	showerror();
 	  		send_email($email, "sign_up");
+	  		sign_in($email, $password);
 		} else {
 			echo '<script>';
 			echo 'alert("Email or SNN is already registered");';
@@ -123,7 +124,7 @@ session_start();
 		}
 	}
 
-	function get_email_info($message_call){
+	function get_send_email_info($message_call){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM Messages WHERE message_call='$message_call'";
@@ -144,7 +145,7 @@ session_start();
 		mail($to, $subject, $message, $headers);
 	}
 
-	function get_tax_brackets(){
+	function print_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM tax_brackets ORDER BY tax_rate ASC";
@@ -163,7 +164,7 @@ session_start();
 	}
 
 
-	function get_commercial_tax_brackets(){
+	function print_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
@@ -178,7 +179,7 @@ session_start();
 		}				
 	}
 
-	function get_smallbiz_tax_brackets(){
+	function print_smallbiz_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM smallbiz_brackets ORDER BY tax_rate ASC";
@@ -265,6 +266,30 @@ session_start();
 		header("location:index.php");
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

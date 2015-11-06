@@ -38,7 +38,7 @@ include 'sql_calls.php';?>
         <th>HEAD OF HOUSEHOLD</th>
         </tr>
 
-        <?php get_tax_brackets(); ?>
+        <?php print_individual_tax_brackets(); ?>
 
         </table>
         </div>
@@ -52,7 +52,7 @@ include 'sql_calls.php';?>
         
         </tr>
 
-        <?php get_commercial_tax_brackets(); ?>
+        <?php print_commercial_tax_brackets(); ?>
 
         </table>
         </div>
@@ -66,7 +66,7 @@ include 'sql_calls.php';?>
         
         </tr>
 
-        <?php get_smallbiz_tax_brackets(); ?>
+        <?php print_smallbiz_tax_brackets(); ?>
 
         </table>
         </div>
