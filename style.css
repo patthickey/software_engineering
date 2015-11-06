@@ -9,3 +9,14 @@
 .sign_in, .sign_out, .auditor, .admin {
 	display:none; 
 }
+
+#contact_us_form.header{
+        color: #36A0FF;
+        font-size: 27px;
+        padding: 10px;
+    }
+
+#contact_us_form.bigicon {
+        font-size: 35px;
+        color: #36A0FF;
+    }
