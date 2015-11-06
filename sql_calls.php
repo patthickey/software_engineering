@@ -138,8 +138,8 @@ session_start();
 		$email_info = get_email_info($message_call);
 		$subject = $email_info["subject"];
 		$message = $email_info["message"];
-		$headers = 'From: patthickey@gmail.com' . "\r\n" .
-		    'Reply-To: patthickey@gmail.com' . "\r\n" .
+		$headers = 'From: irs.software.project@gmail.com' . "\r\n" .
+		    'Reply-To: irs.software.project@gmail.com' . "\r\n" .
 		    'X-Mailer: PHP/' . phpversion();
 		mail($to, $subject, $message, $headers);
 	}
@@ -153,10 +153,14 @@ session_start();
 		echo"<tr>";
 		echo"
 		<td>{$row["tax_rate"]}</td>
-		<td>{$row["single_filer_low"]} to {$row["single_filer_high"]}</td>
-		<td>{$row["married_filing_together_low"]} to {$row["married_filing_together_high"]}</td>
-		<td>{$row["married_filing_seperate_low"]} to {$row["married_filing_seperate_high"]}</td>
-		<td>{$row["head_of_household_low"]} to {$row["head_of_household_high"]}</td>
+		<td>{$row["single_filer_low"]}</td>
+		<td>{$row["single_filer_high"]}</td>
+		<td>{$row["married_filing_together_low"]}</td>
+		<td>{$row["married_filing_together_high"]}</td>
+		<td>{$row["married_filing_seperate_low"]}</td>
+		<td>{$row["married_filing_seperate_high"]}</td>
+		<td>{$row["head_of_household_low"]}</td>
+		<td>{$row["head_of_household_high"]}</td>
 		";
 		echo"</tr>";
 		}				
@@ -167,21 +171,6 @@ session_start();
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
-		$result = mysql_query($sql);
-		while ($row = @ mysql_fetch_array($result)) {
-		echo"<tr>";
-		echo"
-		<td>{$row["tax_rate"]}</td>
-		<td>{$row["income_low"]} to {$row["income_high"]}</td>
-		";
-		echo"</tr>";
-		}				
-	}
-
-	function get_smallbiz_tax_brackets(){
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$sql = "SELECT * FROM smallbiz_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
