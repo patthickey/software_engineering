@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'sql_calls.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,37 +28,8 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-
-        
-            <div class = "panel panel-primary">
-                <div class = "panel-heading">
-                  <h3 class = "panel-title">  <strong> FAQ 1 Here </strong> </h3>
-                </div>
-                <div class = "panel-body">
-                  Answer 1 Here
-                </div>
-            </div>
-            <div class = "panel panel-primary">
-                <div class = "panel-heading">
-                  <h3 class = "panel-title">  <strong> FAQ 2 Here </strong> </h3>
-                </div>
-                <div class = "panel-body">
-                  Answer 2 Here
-                </div>
-            </div>
-            <div class = "panel panel-primary">
-                <div class = "panel-heading">
-                  <h3 class = "panel-title">  <strong> FAQ 3 Here </strong> </h3>
-                </div>
-                <div class = "panel-body">
-                  Answer 3 Here
-                </div>
-            </div>
-                 
-                
-        
-
-
+        <?php print_faqs(); ?>
+             
       </div>
     </div>
     </div>

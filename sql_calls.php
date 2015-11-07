@@ -343,42 +343,33 @@ session_start();
 
 		    $sql1 = mysql_query("UPDATE users SET first_name = '$fname' , last_name = '$lname' , email = '$email' , date_of_birth = '$date_of_birth'  WHERE id= '$id'") or die(mysql_error());
 		    
-				
-			  
-
-			
 		}   
 		
 		// redirect user
 		$_SESSION['success'] = 'Updated';
 		header("location:index.php");
 		
-		
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	function print_faqs(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM faqs";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo'
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">'.$row["question"].'</h3>
+          </div>
+          <div class="panel-body">
+            '.$row["answer"].'
+          </div>
+        </div>
+        ';
+		}
+	}
 
 
 
