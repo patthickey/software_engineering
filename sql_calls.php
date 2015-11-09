@@ -63,7 +63,7 @@ session_start();
 		$info = mysql_fetch_array($user_info);
 		return $info; 
 
-	}	
+	}
 
 	function sign_up($email, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
@@ -163,6 +163,51 @@ session_start();
 		}				
 	}
 
+	function get_individual_tax_rate($filing_status, $wages)
+	{	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+		switch ($filing_status) {
+		    case "1":
+		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					if (($row["single_filer_low"] <= $wages) && ($row["single_filer_high"] >= $wages))
+					return ($row["tax_rate"];
+				}
+		        break;
+		    case "2":
+		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					if (($row["married_filing_together_low"] <= $wages) && ($row["married_filing_together_high"] >= $wages))
+					return ($row["tax_rate"];
+				}
+		        break;
+		    case "3":
+		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					if (($row["married_filing_seperate_low"] <= $wages) && ($row["married_filing_seperate_high"] >= $wages))
+					return ($row["tax_rate"];
+				}
+		        break;
+		    case "4":
+		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					if (($row["head_of_household_low"] <= $wages) && ($row["head_of_household_high"] >= $wages))
+					return ($row["tax_rate"];
+				}
+		        break;		        
+		    default:
+		        echo "ERROR!";
+		}		
+
+		return "ERROR!"; 
+
+	}
 
 	function print_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
@@ -219,7 +264,7 @@ session_start();
 			connect_to_db();
 		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
 		$result = mysql_query($sql);
-		echo'<form name="update_form" method="post" action=""';
+		echo'<form name="update_form" method="post" action="">';
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
 		echo'<input type="hidden" name="user_id[]" value='.$row["id"].' readonly>';				
@@ -245,7 +290,7 @@ session_start();
 		}
 
 		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
-		<input type="reset" value="reset checks" type="button" class="btn btn-danger" style="right:0px"></div> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px"></div> 
 		</form>';
 
 		// if form has been submitted, process it
@@ -370,6 +415,28 @@ session_start();
         ';
 		}
 	}
+
+	function print_faqs($id, $street, $aptNo, $city, $state, $zipcode, $sp_f_name, $sp_m_name, $sp_snn, $filing_status, $wages, $signature, $date, $occupation){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$user = get_user_data($id);
+		$first_name = $user["first_name"];
+		$middle_name = $user["middle_name"];
+		$last_name = $user["last_name"];
+		$SSN = $user["SSN"];
+		$d_o_b = $user["date_of_birth"];
+
+		$tax_rate = get_individual_tax_rate($filing_status, $wages);
+		$amount_due = $tax_rate * $wages;
+
+    	$query = "INSERT INTO individual_forms VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$sp_f_name', '$sp_m_name', '$sp_snn', '$filing_status', '$wages', '$signature', '$date', '$occupation', '$amount_due')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();
+
+
+	}
+
+
 
 
 
