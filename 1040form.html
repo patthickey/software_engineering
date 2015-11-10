@@ -26,236 +26,114 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
+        <form action="indiv_form.php" method="post" onsubmit="">
+          <!-- Title of the Form document-->
+          <h1>Form 1040 <small>Individual State Income Tax Return</small></h1>
+          <hr>
+          <h2>Home Address</h2>
+          <!-- Home Address -->
+          <div class = "form-group">
+            <label for ="indiv_street">Home Address (Number and Street)</label>
+            <input type = "text" class = "form-control" name="indiv_street" id="indiv_street" placeholder ="Home Address">
+          </div>
 
-      <form action="indiv_form.php" method="post" onsubmit="return validate_signup();">
-      <!-- Title of the Form document-->
-      <h1>Form 1040 <small>Individual State Income Tax Return</small></h1>
-      <div class = "line-separator"></div>
-      <hr width="99%" size="10" align="left">
-      <br>
+          <div class = "form-group">
+            <label for = "indiv_aptNo"> Apartment Number </label>
+            <input type = "number" class = "form-control" name= "indiv_aptNo" id= "indiv_aptNo" placeholder ="Apt No.">
+          </div>
+       
+          <div class = "form-group">
+            <label for = "indiv_ity"> City or Town</label>
+            <input type = "text" class = "form-control" name = "indiv_city" id = "indiv_city" placeholder = "City or Town">
+          </div>
 
-      <!-- Main User -->
-      <form class="form-inline" name="indiv_form" method="post" action="">
-      <!--
-        <div class = "form-group">
-          <label for ="fName">First Name </label>
-          <input type = "text" class = "form-control" id="fName" placeholder ="First Name">
-        </div>
+          <div class = "form-group">
+            <label for = "indiv_state"> State</label>
+            <input type = "text" class = "form-control" name = "indiv_state" id = "indiv_state" placeholder = "State">
+          </div>
 
-        <div class = "form-group">
-          <label for ="midInit">Middle Initial </label>
-          <input type = "text" class = "form-control" id="midInit" placeholder ="Middle Initial">
-        </div> 
+          <div class = "form-group">
+            <label for = "indiv_zipcode"> Zip Code</label>
+            <input type = "text" class = "form-control" name = "indiv_zipcode" id = "indiv_zipcode" placeholder = "Zipcode">
+          </div>
 
-        <div class = "form-group">
-          <label for = "lName">Last Name </label>
-          <input type = "text" class = "form-control" id="lName" placeholder ="Last Name">
-        </div>
+          <hr>
+          <h2>Work Information</h2>
 
-         <div class = "form-group">
-          <label for = "SSN">Social Security Number</label>
-          <input type = "number" class = "form-control" id="SSN" placeholder ="000-00-0000">
-         </div>
-      </form>
-      <br>
- 
-    -->
+          <div class="form-group">
+            <label for="indiv_occupation">Occupation</label>
+            <input type="text" class="form-control" name="indiv_occupation" id="indiv_occupation" placeholder="Occupation">
+          </div>
 
-      <!-- Home Address -->
-        <div class = "form-group">
-          <label for ="indiv_steet">Home Address (Number and Street)</label>
-          <input type = "text" class = "form-control" name="indiv_steet" id="indiv_steet" placeholder ="Home Address">
-        </div>
+          <div class = "form-group">
+            <label for = "indiv_wages"> Enter Total Wages, Salaries, Tips, etc.</label>
+            <input type = "number" class = "form-control" name = "indiv_wages" id = "indiv_wages" placeholder = "Wages, Salaries, Tips, etc.">
+          </div>
 
-        <div class = "form-group">
-          <label for = "indiv_aptNo"> Apartment Number </label>
-          <input type = "number" class = "form-control" name= "indiv_aptNo" id= "indiv_aptNo" placeholder ="Apt No.">
-        </div>
-     
-        <div class = "form-group">
-          <label for = "indiv_ity"> City or Town</label>
-          <input type = "text" class = "form-control" name = "indiv_city" id = "indiv_city" placeholder = "City or Town">
-        </div>
+          <hr>
+          <h2>Filing Status</h2>
 
-        <div class = "form-group">
-          <label for = "indiv_state"> State</label>
-          <input type = "text" class = "form-control" name = "indiv_state" id = "indiv_state" placeholder = "State">
-        </div>
-
-        <div class = "form-group">
-          <label for = "indiv_zipcode"> Zip Code</label>
-          <input type = "text" class = "form-control" name = "indiv_zipcode" id = "indiv_zipcode" placeholder = "Zipcode">
-        </div>
-      <br>
-
-      <!-- Form line in which holds Fields for Spouse's first name, middle intitial, last name, and SSN -->
-        <div class = "form-group">
-          <label for = "indiv_sp_f_name">Spouse's First Name </label>
-          <input type = "text" class = "form-control" name = "indiv_sp_f_name" id = "indiv_sp_f_name" placeholder = "Spouse's First Name">
-        </div>
-
-        <div class = "form-group">
-          <label for = "indiv_sp_m_name">  Middle Initial </label>
-          <input type = "text" class = "form-control" name = "indiv_sp_m_name" id = "indiv_sp_m_name" placeholder = "Spouse's Middle Initial">
-        </div>
-        <div class = "form-group">
-          <label for = "indiv_sp_l_name"> Last Name </label>
-          <input type = "text" class = "form-control" name = "indiv_sp_l_name" id = "indiv_sp_l_name" placeholder = "Spouse's Last Name">
-        </div>
-        <div class = "form-group">
-          <label for = "indiv_sp_ssn">  Spouse's SSN </label>
-          <input type = "number" onKeyDown="textCounter(this,'message_count',10);"
-              onKeyUp="textCounter(this,'message_count',10)" class = "form-control" name = "indiv_sp_ssn" id = "indiv_sp_ssn" placeholder = "000-00-0000" >
-        </div>
-      <br>
-
-      <!--Filing Status -->
-      <h2>Filing Status</h2>
-
-
-      <div class="form-group">
+          <div class="form-group">
             <select class="form-control" name="indiv_filing_status">
               <option value="1">Single</option>        
               <option value="2">Married filing jointly</option>
               <option value="3">Married filing seperately</option>
               <option value="4">Head of household</option>
             </select>
-      </div>   
-      <p>Head of Household - If the qualifying person is a child but not your dependent, enter this child’s name here.</p> 
+          </div>   
+          <p>Head of Household - If the qualifying person is a child but not your dependent, enter this child’s name here.</p>
 
+          <div class = "form-group">
+            <label for = "indiv_sp_f_name">Spouse's First Name </label>
+            <input type = "text" class = "form-control" name = "indiv_sp_f_name" id = "indiv_sp_f_name" placeholder = "Spouse's First Name">
+          </div>
 
-    <!--
-     <div class="checkbox1">
-       <label>
-       <input type="checkbox" value="">
-        Single.
-       </label>
-     </div>
+          <div class = "form-group">
+            <label for = "indiv_sp_m_name">  Middle Initial </label>
+            <input type = "text" class = "form-control" name = "indiv_sp_m_name" id = "indiv_sp_m_name" placeholder = "Spouse's Middle Initial">
+          </div>
+          <div class = "form-group">
+            <label for = "indiv_sp_l_name"> Last Name </label>
+            <input type = "text" class = "form-control" name = "indiv_sp_l_name" id = "indiv_sp_l_name" placeholder = "Spouse's Last Name">
+          </div>
+          <div class = "form-group">
+            <label for = "indiv_sp_ssn">  Spouse's SSN </label>
+            <input type = "number" onKeyDown="textCounter(this,'message_count',10);"
+                onKeyUp="textCounter(this,'message_count',10)" class = "form-control" name = "indiv_sp_ssn" id = "indiv_sp_ssn" placeholder = "000-00-0000" >
+          </div>        
 
-     <div class="checkbox1">
-       <label>
-       <input type="checkbox" value="">
-        Married filing jointly (even if only one had income)
-       </label>
-     </div>
+          <hr>
+          <h2>Dependents</h2>
+          <table class="table-condensed">
+            <tr>
+              <th> First & Last Name</th>
+              <th> Dependent's SSN</th>
+              <th> Relationship to You </th>
+            </tr>
+            <tr>
+             <td><input type="text" class="form-control" name="indiv_dep_f_name" id="indiv_dep_f_name" placeholder="First Name"></td>
+             <td><input type="text" class="form-control" name="indiv_dep_l_name" id="indiv_dep_l_name" placeholder="Last Name"></td>        
+             <td><input type="number" class="form-control" name="indiv_dep_ssn" id="indiv_dep_ssn" placeholder="Dependent's SSN"></td>
+             <td><input type="text" class="form-control" name="indiv_dep_relation" id="indiv_dep_relation" placeholder="Relationship to You"></td>
+            </tr>
+          </table>
 
-     <div class="checkbox1">
-       <label>
-       <input type="checkbox" value="">
-        Married filing separately. 
-       </label>
-     </div>
+          <hr>
+          <h2>Sigature</h2>
 
-     <div class="checkbox1">
-       <label>
-       <input type="checkbox" value="">
-        Head of household (with qualifying person). (See instructions.) If the qualifying person is a child but not your dependent, enter this child’s name here.
-        <input type="text" class="form-control" placeholder="Child's Full Name">
-        </label>
-     </div>
-    -->
-    <div class="form-group">
-          <select class="form-control" name="indiv_filing_status">
-            <option value="1">Single</option>        
-            <option value="2">Married filing jointly</option>
-            <option value="3">Married filing seperately</option>
-            <option value="4">Head of household</option>
-          </select>
-    </div>   
-    <p>Head of Household - If the qualifying person is a child but not your dependent, enter this child’s name here.</p> 
-    
+          <div class="form-group">
+            <input type="text" class="form-control" name="indiv_signature" id="indiv_signature" placeholder="Signature">
+          </div>
 
-    <!-- Exemptions -->
-    <!--
-    <h2>Exemptions</h2>
+          <hr>
 
-       <div class="checkbox">
-        <label>
-          <input type="checkbox" value="">
-          <b>Yourself</b>. If someone can claim you as a dependent, do not check box 
-        </label>
-       </div>
+          <div class="button-box">
+            <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+            <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
+          </div>
+        </form>
 
-       <div class="checkbox">
-        <label>
-          <input type="checkbox" value="">
-          <b>Spouse</b>
-         </label>
-       </div>
-    -->
-
-      <table class="table-condensed">
-      <h4>Dependents</h4>
-
-        <tr>
-          <th> First & Last Name</th>
-          <th> Dependent's SSN</th>
-          <th> Relationship to You </th>
-        </tr>
-        <tr>
-         <td><input type="text" class="form-control" name="indiv_dep_f_name" id="indiv_dep_f_name" placeholder="First Name"></td>
-         <td><input type="text" class="form-control" name="indiv_dep_l_name" id="indiv_dep_l_name" placeholder="Last Name"></td>        
-         <td><input type="number" class="form-control" name="indiv_dep_ssn" id="indiv_dep_ssn" placeholder="Dependent's SSN"></td>
-         <td><input type="text" class="form-control" name="indiv_dep_relation" id="indiv_dep_relation" placeholder="Relationship to You"></td>
-        </tr>
-    </table>
-    <br>
-  
-  <!-- Income -->
-  <h2> Income </h2>
-    <br>
-
-    <div class = "form-group">
-      <label for = "indiv_wages"> Enter Total Wages, Salaries, Tips, etc.</label>
-      <input type = "number" class = "form-control" name = "indiv_wages" id = "indiv_wages" placeholder = "Wages, Salaries, Tips, etc.">
-    </div>
-
-
-  <!--User Signature, Date, Occupation, and Submit Form Button -->
-  <h2>Signature</h2>
-
-        <div class="form-group">
-          <label for="indiv_signature">Signature</label>
-          <input type="text" class="form-control" name="indiv_signature" id="indiv_signature" placeholder="Signature">
-        </div>
-        <!--
-        <div class="form-group">
-          <label for="indiv_date">Date</label>
-          <input type="date" class="form-control" name="indiv_date" id="indiv_date" placeholder="Date">
-        </div>
-        -->
-        <div class="form-group">
-          <label for="indiv_occupation">Occupation</label>
-          <input type="text" class="form-control" name="indiv_occupation" id="indiv_occupation" placeholder="Occupation">
-        </div>
-      <!--
-      <form class="form-inline">
-        <div class="form-group">
-          <label for="SpSignature">Spouse's Signature</label>
-          <input type="text" class="form-control" id="exampleSpSignature" placeholder="Spouse's Signature">
-        </div>
-        <div class="form-group">
-          <label for="exampleDate">Date</label>
-          <input type="date" class="form-control" id="exampleDate" placeholder="Date">
-        </div>
-         <div class="form-group">
-          <label for="SpOccupation">Spouse's Occupation</label>
-          <input type="text" class="form-control" id="exampleSpOccupation" placeholder="Spouse's Occupation">
-        </div>
-      </form>
-      -->
-      <br>
- 
-
-    <div class="button-box">
-    <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
-    <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
-    </div> 
-    </form>
-
-
-
-    </div>
+      </div>
     </div>
     </div>
     <div id="footerfile"></div>

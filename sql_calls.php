@@ -59,9 +59,10 @@ session_start();
 	{	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$user_info = "SELECT first_name, middle_name, last_name, email, date_of_birth FROM users WHERE id='$user_id'";
-		$info = mysql_fetch_array($user_info);
-		return $info; 
+		$sql = "SELECT first_name, middle_name, last_name, email, SSN, date_of_birth FROM users WHERE id='$user_id'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row; 
 
 	}
 
@@ -163,50 +164,61 @@ session_start();
 		}				
 	}
 
-	function get_individual_tax_rate($filing_status, $wages)
-	{	
+	
+	function get_individual_tax_rate($filing_status, $wages){	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-
 		switch ($filing_status) {
-		    case "1":
+			
+		    case 1:
 		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM tax_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
-					if (($row["single_filer_low"] <= $wages) && ($row["single_filer_high"] >= $wages))
-					return ($row["tax_rate"];
+					$low = $row["single_filer_low"];
+					$high = $row["single_filer_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
 				}
 		        break;
-		    case "2":
+		    case 2:
 		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM tax_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
-					if (($row["married_filing_together_low"] <= $wages) && ($row["married_filing_together_high"] >= $wages))
-					return ($row["tax_rate"];
+					$low = $row["married_filing_together_low"];
+					$high = $row["married_filing_together_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
 				}
 		        break;
-		    case "3":
+		    case 3:
 		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM tax_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
-					if (($row["married_filing_seperate_low"] <= $wages) && ($row["married_filing_seperate_high"] >= $wages))
-					return ($row["tax_rate"];
+					$low = $row["married_filing_seperate_low"];
+					$high = $row["married_filing_seperate_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
 				}
 		        break;
-		    case "4":
+		    case 4:
 		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM tax_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
-					if (($row["head_of_household_low"] <= $wages) && ($row["head_of_household_high"] >= $wages))
-					return ($row["tax_rate"];
+					$low = $row["head_of_household_low"];
+					$high = $row["head_of_household_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
 				}
-		        break;		        
+		        break;
+				        
 		    default:
-		        echo "ERROR!";
-		}		
-
-		return "ERROR!"; 
-
+		        echo "ERROR 01!";
+		}
+		return "ERROR 02!"; 
 	}
 
 	function print_commercial_tax_brackets(){
@@ -416,7 +428,9 @@ session_start();
 		}
 	}
 
-	function print_faqs($id, $street, $aptNo, $city, $state, $zipcode, $sp_f_name, $sp_m_name, $sp_snn, $filing_status, $wages, $signature, $date, $occupation){
+	
+	function individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
+	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$user = get_user_data($id);
@@ -427,14 +441,18 @@ session_start();
 		$d_o_b = $user["date_of_birth"];
 
 		$tax_rate = get_individual_tax_rate($filing_status, $wages);
+		$tax_rate = $tax_rate / 100;
 		$amount_due = $tax_rate * $wages;
 
-    	$query = "INSERT INTO individual_forms VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$sp_f_name', '$sp_m_name', '$sp_snn', '$filing_status', '$wages', '$signature', '$date', '$occupation', '$amount_due')";
+    	$query = "INSERT INTO individual_forms VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$occupation', '$wages', '$filing_status', '$sp_f_name', '$sp_m_name', '$sp_l_name', '$sp_ssn', '$signature', '$sig_date', '$amount_due')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
 
-
+		header("Location: http://project.patthickey.com");
+		die();
+	
 	}
+	
 
 
 
