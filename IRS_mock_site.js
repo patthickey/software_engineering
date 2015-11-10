@@ -20,6 +20,33 @@ $(document).ready(function(){
             $(".sign_out").show()
         }
 
+    $('#indiv_filing_status').change(function(){
+        if( ($(this).val()==2) || ($(this).val()==3) )     {
+            $("#indiv_married").show()
+            $("#indiv_head_of_house").hide()             
+        }
+        else if ($(this).val()==4){
+            $("#indiv_married").hide()        	
+            $("#indiv_head_of_house").show()
+        }
+        else{
+            $("#indiv_married").hide()
+            $("#indiv_head_of_house").hide()            
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
 }); //this entire block of code is contantly running. in it, we can add code that checks uppdates on a page (text change, etc.)
 
 function on_page_load() {

@@ -74,7 +74,7 @@
           <h2>Filing Status</h2>
 
           <div class="form-group">
-            <select class="form-control" name="indiv_filing_status">
+            <select class="form-control" name="indiv_filing_status" id="indiv_filing_status">
               <option value="1">Single</option>        
               <option value="2">Married filing jointly</option>
               <option value="3">Married filing seperately</option>
@@ -83,40 +83,45 @@
           </div>   
           <p>Head of Household - If the qualifying person is a child but not your dependent, enter this child’s name here.</p>
 
-          <div class = "form-group">
-            <label for = "indiv_sp_f_name">Spouse's First Name </label>
-            <input type = "text" class = "form-control" name = "indiv_sp_f_name" id = "indiv_sp_f_name" placeholder = "Spouse's First Name">
-          </div>
+          <div id="indiv_married" style="display:none">
+            <div class = "form-group">
+              <label for = "indiv_sp_f_name">Spouse's First Name </label>
+              <input type = "text" class = "form-control" name = "indiv_sp_f_name" id = "indiv_sp_f_name" placeholder = "Spouse's First Name">
+            </div>
 
-          <div class = "form-group">
-            <label for = "indiv_sp_m_name">  Middle Initial </label>
-            <input type = "text" class = "form-control" name = "indiv_sp_m_name" id = "indiv_sp_m_name" placeholder = "Spouse's Middle Initial">
-          </div>
-          <div class = "form-group">
-            <label for = "indiv_sp_l_name"> Last Name </label>
-            <input type = "text" class = "form-control" name = "indiv_sp_l_name" id = "indiv_sp_l_name" placeholder = "Spouse's Last Name">
-          </div>
-          <div class = "form-group">
-            <label for = "indiv_sp_ssn">  Spouse's SSN </label>
-            <input type = "number" onKeyDown="textCounter(this,'message_count',10);"
-                onKeyUp="textCounter(this,'message_count',10)" class = "form-control" name = "indiv_sp_ssn" id = "indiv_sp_ssn" placeholder = "000-00-0000" >
+            <div class = "form-group">
+              <label for = "indiv_sp_m_name">  Middle Initial </label>
+              <input type = "text" class = "form-control" name = "indiv_sp_m_name" id = "indiv_sp_m_name" placeholder = "Spouse's Middle Initial">
+            </div>
+            <div class = "form-group">
+              <label for = "indiv_sp_l_name"> Last Name </label>
+              <input type = "text" class = "form-control" name = "indiv_sp_l_name" id = "indiv_sp_l_name" placeholder = "Spouse's Last Name">
+            </div>
+            <div class = "form-group">
+              <label for = "indiv_sp_ssn">  Spouse's SSN </label>
+              <input type = "number" onKeyDown="textCounter(this,'message_count',10);"
+                  onKeyUp="textCounter(this,'message_count',10)" class = "form-control" name = "indiv_sp_ssn" id = "indiv_sp_ssn" placeholder = "000-00-0000" >
+            </div>
           </div>        
 
           <hr>
-          <h2>Dependents</h2>
-          <table class="table-condensed">
-            <tr>
-              <th> First & Last Name</th>
-              <th> Dependent's SSN</th>
-              <th> Relationship to You </th>
-            </tr>
-            <tr>
-             <td><input type="text" class="form-control" name="indiv_dep_f_name" id="indiv_dep_f_name" placeholder="First Name"></td>
-             <td><input type="text" class="form-control" name="indiv_dep_l_name" id="indiv_dep_l_name" placeholder="Last Name"></td>        
-             <td><input type="number" class="form-control" name="indiv_dep_ssn" id="indiv_dep_ssn" placeholder="Dependent's SSN"></td>
-             <td><input type="text" class="form-control" name="indiv_dep_relation" id="indiv_dep_relation" placeholder="Relationship to You"></td>
-            </tr>
-          </table>
+          <div id="indiv_head_of_house" style="display:none">
+            <h2>Dependents</h2>
+            <table class="table-condensed">
+              <tr>
+                <th> First Name</th>
+                <th> Last Name</th>
+                <th> Dependent's SSN</th>
+                <th> Relationship to You </th>
+              </tr>
+              <tr>
+               <td><input type="text" class="form-control" name="indiv_dep_f_name" id="indiv_dep_f_name" placeholder="First Name"></td>
+               <td><input type="text" class="form-control" name="indiv_dep_l_name" id="indiv_dep_l_name" placeholder="Last Name"></td>        
+               <td><input type="number" class="form-control" name="indiv_dep_ssn" id="indiv_dep_ssn" placeholder="Dependent's SSN"></td>
+               <td><input type="text" class="form-control" name="indiv_dep_relation" id="indiv_dep_relation" placeholder="Relationship to You"></td>
+              </tr>
+            </table>
+          </div>
 
           <hr>
           <h2>Sigature</h2>

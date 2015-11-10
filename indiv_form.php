@@ -30,5 +30,7 @@ $date = date('Y-m-d');
 	if ($filing_status == 4)
 		individual_tax_form_dependents($id, $dep_f_name, $dep_l_name, $dep_ssn, $dep_relation);
 
+	header("Location: http://project.patthickey.com");
+	die();
 
 ?>

@@ -446,12 +446,19 @@ session_start();
 
     	$query = "INSERT INTO individual_forms VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$occupation', '$wages', '$filing_status', '$sp_f_name', '$sp_m_name', '$sp_l_name', '$sp_ssn', '$signature', '$sig_date', '$amount_due')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
-  	 		showerror();
-
-		header("Location: http://project.patthickey.com");
-		die();
-	
+  	 		showerror();	
 	}
+
+	function individual_tax_form_dependents($id, $first_name, $last_name, $ssn, $relation){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+    	$query = "INSERT INTO individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();
+	
+	}	
 	
 
 
