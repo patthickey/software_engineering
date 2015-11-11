@@ -29,20 +29,27 @@
 
       <div = "container-fluid">
       <!-- Title of the Form document-->
-      <h1>Form 1120-W <small>Estimated Tax for Small Business</small></h1>
+      <h1>Form 1120-W</h1>
       <div class = "line-separator"></div>
       <hr width="99%" size="10" align="left">
       <br>
 
       <!-- Corp -->
-        <div class = "form-group">
-          <label for ="CoName">Name of Corporation/Commercial Business </label>
+       
+
+
+       <div class="panel panel-default">
+       <div class="panel-heading"><h2>Estimated Tax for Small Business<h2></div>
+       <div class="panel-body">
+         <div class = "form-group">
+          <h2><small>Small Business Information</small></h2>
+
+          <label for ="CoName">Name of Business/Company </label>
           <input type = "text" class = "form-control" id="CoName" placeholder ="Corporation/Company Name">
         </div>
 
-      <form class = "form-inline">
         <div class = "form-group">
-          <label for ="CoAddress">Corporation/Company Address </label>
+          <label for ="CoAddress">Address </label>
           <input type = "text" class = "form-control" id="CoAddress" placeholder ="Company Address">
         </div> 
 
@@ -53,69 +60,61 @@
 
         <div class = "form-group">
           <label for = "State">State</label>
-          <input type = "number" class = "form-control" id="State" placeholder = "State">
+          <input type = "text" class = "form-control" id="State" placeholder = "State">
          </div>
 
          <div class = "form-group">
           <label for = "ZIP">Zip Code</label>
           <input type = "number" class = "form-control" id="ZIP" placeholder = "00000">
          </div>
-         
-         <div class = "form-group">
-         <label for = "Number of Employees"> Number of Employees </label>
-         <input type = "number" class = "form-control" id = "emply">
-         </div>
-      </form>
       <br>
 
+      <div class = "row">
+        <div class = "col-xs-6 col-sm-4">
+          <div class = "form-group">
+           <label for = "Number of Employees"> Number of Employees </label>
+           <input type = "number" class = "form-control" id = "emply">
+          </div>
+        </div>
+      </div>
+   
 
-      <h2> Income </h2>
-      <br>
 
+      <h2><small>Income Information</small></h2>
       <form class = "form-group">
-        <div class = "form-group">
-          <label for = "Gross Income">Gross Income</label>
-          <input type = "text" class = "form-control" id = "gross" placeholder = "Gross Income">
-        </div>
-
-        <div class = "form-group">
-          <label for = "taxable">8a Taxable Interest. Attach Schedule B if required</label>
-          <input type = "text" class = "form-control" id = "taxable" placeholder = "Attach Schedule B if required">
-        </div>
-
-        <div class = "form-group">
-          <label for = "taxex">b Tax-exempt Interest. Do not include on line 8a</label>
-          <input type = "text" class = "form-control" id = "taxex" placeholder = "Tax-exempt">
-        </div>
-
-        <div class = "form-group">
-          <label for = "taxrefund">9 Taxable refunds, credits, or offsets Wages, salaries, tips, etc. Attach Form(s) W-2</label>
-          <input type = "text" class = "form-control" id = "wages" placeholder = "Tax refund">
+        <div class = "row">
+          <div class = "col-xs-6 col-sm-4">
+            <div class = "form-group">
+              <label for = "Gross Income">Enter Total Income</label>
+              <input type = "number" class = "form-control" id = "gross" placeholder = "Gross Income">
+            </div>
+          </div>
         </div>
       </form>
 
       <!--User Signature, Date, Occupation, and Submit Form Button -->
-      <h2>Signature</h2>
-
-      <form class="form-inline">
+      <h2><small>Signature</small></h2>
         <div class="form-group">
           <label for="Signature">Signature</label>
           <input type="text" class="form-control" id="exampleSignature" placeholder="Signature">
         </div>
         <div class="form-group">
-          <label for="exampleDate">Date</label>
-          <input type="date" class="form-control" id="exampleDate" placeholder="Date">
-        </div>
-        <div class="form-group">
           <label for="exampleOccupation">Title of Signee</label>
           <input type="text" class="form-control" id="exampleTitle" placeholder="Title of Signee">
         </div>
-      </form>
       <br>
 
       <!-- Submit And Clear Form -->
-      <button type="button" class="btn btn-primary btn-lg btn-block">Submit 1040 Form</button>
-      <button type="button" class="btn btn-default btn-lg btn-block">Clear 1040 Form</button>
+      <div class="col-sm-offset-5 col-sm-2 text-center">
+        <div class="button-box">
+          <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+          <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
+        </div>
+       </div>
+      </div>
+    </div> 
+
+
       
       </div>
     </div>
