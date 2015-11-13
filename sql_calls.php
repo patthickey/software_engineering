@@ -2,6 +2,12 @@
 session_start();
 // Connect to MySQL DBMS
 	
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// CONNECT TO DATABASE
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------	
+
 	$connection;
 	$connected = False;
 
@@ -15,7 +21,15 @@ session_start();
 		  showerror();
 		$GLOBALS['$connected'] = True;
 	}
- 
+
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// GETTERS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------	
+
+
 	function get_email($email)
 	{
 		if ($GLOBALS['$connected'] == False) 
@@ -65,6 +79,13 @@ session_start();
 		return $row; 
 
 	}
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// SIGN UP / SIGN IN
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
 
 	function sign_up($email, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date)
 	{
@@ -125,6 +146,13 @@ session_start();
 		}
 	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// SENDING A MESSAGE
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+
 	function get_send_email_info($message_call){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -146,6 +174,13 @@ session_start();
 		mail($to, $subject, $message, $headers);
 	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// PRINT TAX BRACKETS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+
 	function print_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -162,63 +197,6 @@ session_start();
 		";
 		echo"</tr>";
 		}				
-	}
-
-	
-	function get_individual_tax_rate($filing_status, $wages){	
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		switch ($filing_status) {
-			
-		    case 1:
-		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM tax_brackets";
-		        $result = mysql_query($sql);
-				while ($row = @ mysql_fetch_array($result)) {
-					$low = $row["single_filer_low"];
-					$high = $row["single_filer_high"];
-					
-					if (($low <= $wages) && ($high >= $wages))
-						return $row["tax_rate"];
-				}
-		        break;
-		    case 2:
-		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM tax_brackets";
-		        $result = mysql_query($sql);
-				while ($row = @ mysql_fetch_array($result)) {
-					$low = $row["married_filing_together_low"];
-					$high = $row["married_filing_together_high"];
-					
-					if (($low <= $wages) && ($high >= $wages))
-						return $row["tax_rate"];
-				}
-		        break;
-		    case 3:
-		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM tax_brackets";
-		        $result = mysql_query($sql);
-				while ($row = @ mysql_fetch_array($result)) {
-					$low = $row["married_filing_seperate_low"];
-					$high = $row["married_filing_seperate_high"];
-					
-					if (($low <= $wages) && ($high >= $wages))
-						return $row["tax_rate"];
-				}
-		        break;
-		    case 4:
-		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM tax_brackets";
-		        $result = mysql_query($sql);
-				while ($row = @ mysql_fetch_array($result)) {
-					$low = $row["head_of_household_low"];
-					$high = $row["head_of_household_high"];
-					
-					if (($low <= $wages) && ($high >= $wages))
-						return $row["tax_rate"];
-				}
-		        break;
-				        
-		    default:
-		        echo "ERROR 01!";
-		}
-		return "ERROR 02!"; 
 	}
 
 	function print_commercial_tax_brackets(){
@@ -249,9 +227,41 @@ session_start();
 		";
 		echo"</tr>";
 		}				
-	}	
+	}
 
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// PRINT FAQS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+
+	function print_faqs(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM faqs";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo'
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">'.$row["question"].'</h3>
+          </div>
+          <div class="panel-body">
+            '.$row["answer"].'
+          </div>
+        </div>
+        ';
+		}
+	}
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// USER FUNCTIONS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+	
 	function print_user_data($user_id){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -270,58 +280,6 @@ session_start();
 		}
 	}
 
-
-	function admin_update_privilege_level($email/*, $privilege*/){
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
-		$result = mysql_query($sql);
-		echo'<form name="update_form" method="post" action="">';
-		while ($row = @ mysql_fetch_array($result)) {
-		echo"<tr>";
-		echo'<input type="hidden" name="user_id[]" value='.$row["id"].' readonly>';				
-		echo"
-		<td>{$row["first_name"]}</td>
-		<td>{$row["last_name"]}</td>
-		<td>{$row["email"]}</td>
-		<td>{$row["privilege"]}</td>
-		";
-
-		echo'<td>
-			<div class="form-group">
-            <select class="form-control" name="update_privilege[]">
-                <option value='.$row["privilege"].'>Current</option>      	
-             	<option value="1">1</option>
-            	<option value="2">2</option>
-            	<option value="3">3</option>
-            </select>
-          	</div>
-          	</td>';
-
-		echo"</tr>";
-		}
-
-		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
-		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
-		</form>';
-
-		// if form has been submitted, process it
-		if($_POST["Submit"])
-		{	
-
-			$i = 0;
-		   foreach($_POST['user_id'] as $value)
-		       {
-		       			$update = $_POST['update_privilege'][$i];
-
-		       $sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
-			   }   
-		}
-		// redirect user
-		$_SESSION['success'] = 'Updated';
-		header("location:index.php");
-		
-	}
 	function account_print_user_data($id){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -407,27 +365,13 @@ session_start();
 		
 	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// FILING OUT TAX FORMS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
 
-	function print_faqs(){
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$sql = "SELECT * FROM faqs";
-		$result = mysql_query($sql);
-		while ($row = @ mysql_fetch_array($result)) {
-		echo'
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">'.$row["question"].'</h3>
-          </div>
-          <div class="panel-body">
-            '.$row["answer"].'
-          </div>
-        </div>
-        ';
-		}
-	}
 
-	
 	function individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
 	
 		if ($GLOBALS['$connected'] == False) 
@@ -456,10 +400,134 @@ session_start();
     	$query = "INSERT INTO individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
+	}
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// GET USER TAX RATES
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
 
 	
-	}	
+	function get_individual_tax_rate($filing_status, $wages){	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		switch ($filing_status) {
+			
+		    case 1:
+		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["single_filer_low"];
+					$high = $row["single_filer_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 2:
+		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["married_filing_together_low"];
+					$high = $row["married_filing_together_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 3:
+		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["married_filing_seperate_low"];
+					$high = $row["married_filing_seperate_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 4:
+		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM tax_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["head_of_household_low"];
+					$high = $row["head_of_household_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+				        
+		    default:
+		        echo "ERROR 01!";
+		}
+		return "ERROR 02!"; 
+	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// ADMIN FUNCTIONS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+	function admin_update_privilege_level($email/*, $privilege*/){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
+		$result = mysql_query($sql);
+		echo'<form name="update_form" method="post" action="">';
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo'<input type="hidden" name="user_id[]" value='.$row["id"].' readonly>';				
+		echo"
+		<td>{$row["first_name"]}</td>
+		<td>{$row["last_name"]}</td>
+		<td>{$row["email"]}</td>
+		<td>{$row["privilege"]}</td>
+		";
+
+		echo'<td>
+			<div class="form-group">
+            <select class="form-control" name="update_privilege[]">
+                <option value='.$row["privilege"].'>Current</option>      	
+             	<option value="1">1</option>
+            	<option value="2">2</option>
+            	<option value="3">3</option>
+            </select>
+          	</div>
+          	</td>';
+
+		echo"</tr>";
+		}
+
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		// if form has been submitted, process it
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+		   foreach($_POST['user_id'] as $value)
+		       {
+		       			$update = $_POST['update_privilege'][$i];
+
+		       $sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
+			   }   
+		}
+		// redirect user
+		$_SESSION['success'] = 'Updated';
+		header("location:index.php");
+		
+	}
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// UPDATE TAX BRACKETS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
 
 	function update_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
@@ -687,5 +755,26 @@ session_start();
 		}
 	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// ????
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// ????
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// ????
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------	
 
 ?>
