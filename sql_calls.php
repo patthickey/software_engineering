@@ -271,7 +271,7 @@ session_start();
 	}
 
 
-	function admin_print_user_data($email/*, $privilege*/){
+	function admin_update_privilege_level($email/*, $privilege*/){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
@@ -301,8 +301,8 @@ session_start();
 		echo"</tr>";
 		}
 
-		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
-		<input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px"></div> 
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
 		</form>';
 
 		// if form has been submitted, process it
@@ -312,7 +312,6 @@ session_start();
 			$i = 0;
 		   foreach($_POST['user_id'] as $value)
 		       {
-
 		       			$update = $_POST['update_privilege'][$i];
 
 		       $sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
@@ -361,8 +360,8 @@ session_start();
 		echo"</tr>";
 		}
 
-		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
-		</div> 
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
 		</form>';
 
 		// if form has been submitted, process it
@@ -372,26 +371,26 @@ session_start();
 		if($_POST["Submit"])
 		{	
 			
-
 			if( $_POST["fname"] != NULL) {
 				
 				$fname = $_POST["fname"];
-			} else {
-				
+			} else {			
 				$fname = $row["first_name"];
 			  }
+
 			if( $_POST["lname"] != NULL) {
 					
 				$lname = $_POST["lname"];
 			} else {
-
 				$lname = $row["last_name"];
 			  }
+
 			if( $_POST["email"] != NULL) {	
 				$email = $_POST["email"];
 			} else {
 				$email = $row["email"];
 			  }
+
 			if( $_POST["date_of_birth"] != NULL) {	
 				$date_of_birth = $_POST["date_of_birth"];
 			} else {
@@ -457,13 +456,236 @@ session_start();
     	$query = "INSERT INTO individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
+
 	
 	}	
-	
 
 
+	function update_individual_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM tax_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_tax_rate[]" id="update_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["single_filer_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_single_filer_high[]" id="update_single_filer_high" placeholder='.$row["single_filer_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		<td>{$row["married_filing_together_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_married_filing_together_high[]" id="update_married_filing_together_high" placeholder='.$row["married_filing_together_high"].'>
+  			</div>';
+  		echo"		
+		</td>
+		<td>{$row["married_filing_seperate_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_married_filing_seperate_high[]" id="update_married_filing_seperate_high" placeholder='.$row["married_filing_seperate_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		<td>{$row["head_of_household_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_head_of_household_high[]" id="update_head_of_household_high" placeholder='.$row["head_of_household_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
 
+		if($_POST["Submit"])
+		{	
 
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE tax_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_single_filer_high"][$i] != NULL) {
+					$update = $_POST["update_single_filer_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("tax_brackets", "single_filer_low", "single_filer_high", $update, $value, $test);
+				}
+
+				if($_POST["update_married_filing_together_high"][$i] != NULL) {
+					$update = $_POST["update_married_filing_together_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("tax_brackets", "married_filing_together_low", "married_filing_together_high", $update, $value, $test);
+				}
+
+				if($_POST["update_married_filing_seperate_high"][$i] != NULL) {
+					$update = $_POST["update_married_filing_seperate_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("tax_brackets", "married_filing_seperate_low", "married_filing_seperate_high", $update, $value, $test);
+				}
+
+				if($_POST["update_head_of_household_high"][$i] != NULL) {
+					$update = $_POST["update_head_of_household_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("tax_brackets", "update_head_of_household_low", "update_head_of_household_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+
+	}
+
+	function update_commercial_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_com_tax_rate[]" id="update_com_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["income_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_com_income_high[]" id="update_com_income_high" placeholder='.$row["income_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_com_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_com_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE commercial_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_com_income_high"][$i] != NULL) {
+					$update = $_POST["update_com_income_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("commercial_brackets", "income_low", "income_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+	}
+
+	function update_smallbiz_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM smallbiz_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_biz_tax_rate[]" id="update_biz_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["income_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_biz_income_high[]" id="update_biz_income_high" placeholder='.$row["income_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_biz_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_biz_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE smallbiz_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_biz_income_high"][$i] != NULL) {
+					$update = $_POST["update_biz_income_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("smallbiz_brackets", "income_low", "income_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+	}
+
+	function update_tax_brackets($table, $low, $high, $update, $value, $test){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+		$sql1 = mysql_query("UPDATE $table SET $high='$update' WHERE id='$value'") or die(mysql_error());
+		if($test == 1){
+			$temp = $value + 1;
+			$sql2 = "SELECT $high FROM $table WHERE id='$value'";
+			$result2 = mysql_query($sql2);
+			$row2 = @ mysql_fetch_array($result2);
+			$low_update = $row2[$high] + 1;
+			$sql3 = mysql_query("UPDATE $table SET $low='$low_update' WHERE id='$temp'") or die(mysql_error());					
+		}
+	}
 
 
 ?>

@@ -20,3 +20,11 @@
         font-size: 35px;
         color: #36A0FF;
     }
+
+.update_buttons{
+    width: 50%;
+}
+
+.reset_buttons{
+    float: right;
+}

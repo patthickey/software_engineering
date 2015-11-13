@@ -1,8 +1,5 @@
 <?php session_start(); 
-include 'sql_calls.php';
-$search_email = $_POST['search_email'];
-//$privilege_level = $_POST['privilege_level'];
-?>
+include 'sql_calls.php';?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,21 +21,52 @@ $search_email = $_POST['search_email'];
   </head>
 
 
-  <body class="admin_privilege" onload="on_page_load();">
+  <body>
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
+        <h3> Individual </h3>
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
         <tr>
-        <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>PRIVILEGE</th><th>NEW PRIVILEGE</th>
+        <th>TAX RATE by %</th>
+        <th>SINGLE FILER</th>
+        <th>MARRIED FILING TOGETHER</th>
+        <th>MARRIED FILING SEPERATE</th>
+        <th>HEAD OF HOUSEHOLD</th>
         </tr>
 
-        <?php
-        admin_update_privilege_level($search_email/*, $privilege_level*/);
-        ?>
+        <?php update_individual_tax_brackets(); ?>
+
+        </table>
+        </div>
+
+        <h3> Commercial </h3>
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>Income</th>
+        
+        </tr>
+
+        <?php update_commercial_tax_brackets(); ?>
+
+        </table>
+        </div>
+
+        <h3> Small Business </h3>
+        <div class="table-responsive">
+        <table border=1 class="table table-striped table-condensed">
+        <tr>
+        <th>TAX RATE by %</th>
+        <th>Income</th>
+        
+        </tr>
+
+        <?php update_smallbiz_tax_brackets(); ?>
 
         </table>
         </div>
