@@ -1,7 +1,7 @@
 <?php session_start(); 
 include 'sql_calls.php';
 $search_email = $_POST['search_email'];
-//$privilege_level = $_POST['privilege_level'];
+$search_privilege_level = $_POST['search_privilege_level'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@ $search_email = $_POST['search_email'];
         </tr>
 
         <?php
-        admin_update_privilege_level($search_email/*, $privilege_level*/);
+        admin_update_privilege_level($search_email, $search_privilege_level);
         ?>
 
         </table>

@@ -471,10 +471,10 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-	function admin_update_privilege_level($email/*, $privilege*/){
+	function admin_update_privilege_level($email, $search_privilege_level){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM users WHERE email='$email'/* AND privilege='$privilege'*/";
+		$sql = "SELECT * FROM users WHERE email='$email' OR privilege='$search_privilege_level'";
 		$result = mysql_query($sql);
 		echo'<form name="update_form" method="post" action="">';
 		while ($row = @ mysql_fetch_array($result)) {
@@ -510,16 +510,18 @@ session_start();
 		{	
 
 			$i = 0;
-		   foreach($_POST['user_id'] as $value)
-		       {
-		       			$update = $_POST['update_privilege'][$i];
-
-		       $sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
-			   }   
+			foreach($_POST['user_id'] as $value)
+		    {
+	       		if( $_POST['update_privilege'][$i] != NULL) {
+	       			$update = $_POST['update_privilege'][$i];
+					$sql1 = mysql_query("UPDATE users SET privilege='$update' WHERE id='$value'") or die(mysql_error());
+				}
+				$i++;				
+			}   
 		}
 		// redirect user
 		$_SESSION['success'] = 'Updated';
-		header("location:index.php");
+		header("location:project.patthickey.com/search_privilege.html");
 		
 	}
 

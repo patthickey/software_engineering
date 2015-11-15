@@ -36,7 +36,20 @@ $(document).ready(function(){
     });
 
 
-
+    $('#search_option').change(function(){
+        if($(this).val()=="email")     {
+            $("#search_by_email").show()
+            $("#search_by_privilege").hide()             
+        }
+        else if ($(this).val()=="privilege"){
+            $("#search_by_email").hide()        	
+            $("#search_by_privilege").show()
+        }
+        else{
+            $("#search_by_email").hide()
+            $("#search_by_privilege").hide()            
+        }
+    });
 
 
 
