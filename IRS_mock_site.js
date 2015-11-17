@@ -197,6 +197,31 @@ function validate_signin() {
 		}
 }
 
+function validate_add_faqs() {
+
+		if (add_faqs_question.value=="") {
+			document.getElementById("add_faqs_question").focus();
+			document.getElementById("add_faqs_question").style.backgroundColor="#FF6666";
+			return false;
+		}		
+		
+		if(add_faqs_answer.value=="") {
+			document.getElementById("add_faqs_answer").focus();
+			document.getElementById("add_faqs_answer").style.backgroundColor="#FF6666";
+			return false;
+		}
+
+		else{
+			$.ajax({
+		  	type: 'POST',
+		  	url: 'add_faqs.php',
+		  	data: {add_faqs_question:add_faqs_question.value, add_faqs_answer:add_faqs_answer.value},
+		})
+			return true;
+		}
+}
+
+
 function all_privilege_search() {
 
 	if((search_email.value=="All")||(search_email.value=="all")||(search_email.value=="Email")||(search_email.value=="")) {
