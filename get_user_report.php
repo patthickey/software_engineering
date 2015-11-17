@@ -35,14 +35,14 @@ $user = $_COOKIE['login_user'];
         </table>
         </div>
 
-        <form action="auditor_form_history.php" method="post">
+        <form action="privilege_form_history.php" method="post">
           <div class="form-group">
-            <label for="exampleInputEmail1">Enter Email Address of User</label>
+            <label for="email">Enter Email Address of User</label>
               <input type="text" class="form-control" id="email" name='email' placeholder="Email Address">
           </div>
 
           <div class="form-group">
-            <label for="exampleInputEmail1">Enter Year of form submission</label>
+            <label for="year">Enter Year of form submission</label>
               <input type="text" class="form-control" id="year" name='year' placeholder="Year">
           </div>
           <button type="submit" class="btn btn-default">Search</button>

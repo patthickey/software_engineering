@@ -77,8 +77,17 @@ session_start();
 		$result = mysql_query($sql);
 		$row = @ mysql_fetch_array($result);
 		return $row; 
-
 	}
+
+	function get_id($email)
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT id FROM users WHERE email='$email'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row["id"];
+	}	
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
@@ -258,7 +267,6 @@ session_start();
 
 	function add_faqs($question, $answer)
 	{
-
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
@@ -378,6 +386,113 @@ session_start();
 		header("location:index.php");
 		
 	}
+
+	function get_past_form_data($id, $year) {
+
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$year .= "%";
+		
+		
+		$year = $year +
+		$sql = "SELECT * FROM individual_forms WHERE id='$id' AND sig_date LIKE '$year'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		echo'<form name="update_form" method="post" action="">';
+		
+		echo '
+				<h3> Form Submitted on '.$row["sig_date"].' </h3>
+			  <form class="form-horizontal">
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">First Name</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["first_name"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Last Name</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["last_name"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">SSN</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["SSN"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Date of Birth</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["date_of_birth"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Street Address</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["street_address"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Apartment Number</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["apt_num"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">City</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["city"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">State</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["state"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">ZIP</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["zipcode"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Occupation</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["occupation"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Income/Wages</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["wages"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Spouse First Name</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["spouse_f_name"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Spouse Layne Name</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["spouse_l_name"].'</p>
+   					 </div>
+  				</div>
+  				<div class="form-group">
+   				 <label class="col-sm-2 control-label">Amount Due</label>
+    				<div class="col-sm-10">
+     				 <p class="form-control-static">'.$row["amount_due"].'</p>
+   					 </div>
+  				</div>
+  			  </form>
+
+
+  			 ';
+	}
+
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
@@ -769,136 +884,7 @@ session_start();
 			$low_update = $row2[$high] + 1;
 			$sql3 = mysql_query("UPDATE $table SET $low='$low_update' WHERE id='$temp'") or die(mysql_error());					
 		}
-	}
-
-	function get_past_form_data($id, $year) {
-
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$year .= "%";
-		
-		
-		$year = $year +
-		$sql = "SELECT * FROM individual_forms WHERE id='$id' AND sig_date LIKE '$year'";
-		$result = mysql_query($sql);
-		$row = @ mysql_fetch_array($result);
-		echo'<form name="update_form" method="post" action="">';
-		
-		echo '
-				<h3> Form Submitted on '.$row["sig_date"].' </h3>
-			  <form class="form-horizontal">
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">First Name</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["first_name"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Last Name</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["last_name"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">SSN</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["SSN"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Date of Birth</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["date_of_birth"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Street Address</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["street_address"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Apartment Number</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["apt_num"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">City</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["city"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">State</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["state"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">ZIP</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["zipcode"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Occupation</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["occupation"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Income/Wages</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["wages"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Spouse First Name</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["spouse_f_name"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Spouse Layne Name</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["spouse_l_name"].'</p>
-   					 </div>
-  				</div>
-  				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Amount Due</label>
-    				<div class="col-sm-10">
-     				 <p class="form-control-static">'.$row["amount_due"].'</p>
-   					 </div>
-  				</div>
-  			  </form>
-
-
-  			 ';
-	  			 
-
-
-
-
-	}
-	function get_id($email)
-	{
-		
-		
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$sql = "SELECT id FROM users WHERE email='$email'";
-		$result = mysql_query($sql);
-		$row = @ mysql_fetch_array($result);
-		return $row["id"];
-	}
-
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
-// ????
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
-
+	} // this tool is used in all the update tax bracket forms to make the main work universal
 
 
 // -------------------------------------------------------------------------------------------------------------------
@@ -907,6 +893,12 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// ????
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------------------------------------------------------
