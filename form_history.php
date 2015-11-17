@@ -1,6 +1,6 @@
 <?php session_start(); 
 include 'sql_calls.php';
-$user = $_COOKIE['login_user'];
+$year = $_GET["year"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,37 +29,13 @@ $user = $_COOKIE['login_user'];
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>FIRST NAME</th><th>MIDDLE NAME</th><th>LAST NAME</th>
-        <th>EMAIL</th><th>DATE OF BIRTH</th>
-        </tr>
-
+                
         <?php
+
         $user = $_COOKIE["user_id"];
-        print_user_data($user); 
+
+        get_past_form_data($user, $year); 
         ?>
-
-        </table>
-        </div>
-
-        <a class="btn btn-default" href="change_account_info.php" role="button">Click here to update account information</a>
-
-        <br></br>
-
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Select year to view past form history
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="form_history.php?year=2015">2015</a></li>
-            <li><a href="form_history.php?year=2014">2014</a></li>
-            <li><a href="form_history.php?year=2013">2013</a></li>
-            <li><a href="form_history.php?year=2012">2012</a></li>
-           </ul>
-        </div>
 
       </div>
     </div>
@@ -85,5 +61,6 @@ $user = $_COOKIE['login_user'];
         $("#footerfile").load("footer.html"); 
       });
     </script>
+
   </body>
 </html>
