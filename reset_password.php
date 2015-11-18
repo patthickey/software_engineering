@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'sql_calls.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,33 +27,18 @@
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-10 col-md-offset-1">
 
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="text-center">
-              <span class= "form-group"><h3><i class="glyphicon glyphicon-lock color-blue"></i></h3></span>
-              <h2 class="text-center">Forgot Password?</h2>
-              <p>You can reset your password here.</p>
- 
-              <form action = "reset_password.php" class="form" method = "post">
-                <fieldset>
-                  <div class="form-group">
-                    <div class="input-group">
-                       <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                            
-                       <input id="emailInput" placeholder="email address" name = "email" class="form-control" type="email" oninvalid="setCustomValidity('Please enter a valid email address!')" onchange="try{setCustomValidity('')}catch(e){}" required="">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                     <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
-                  </div>
-                </fieldset>
-              </form>   
+                
+        <?php
+        $email = $_POST["email"];
 
-              </div>
-            </div>
-          </div>
+        $id = get_id($email);
+        
+        
+        
+        resetpassword($id); 
+        ?>
 
       </div>
     </div>
@@ -76,5 +64,6 @@
         $("#footerfile").load("footer.html"); 
       });
     </script>
+
   </body>
 </html>
