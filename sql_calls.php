@@ -962,6 +962,35 @@ session_start();
 		$sql1 = mysql_query("UPDATE users SET password='$hash' WHERE id='$id'") or die(mysql_error());
 
 	}
+
+	function change_password($id, $oldPassword, $newPassword)
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+	
+		
+		
+		$hash = get_PW($id); 
+
+		//Unhashing the password to see if it matches what was entered.
+		if (password_verify($oldPassword, $hash)) {
+			
+			$newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+			$sql1 = mysql_query("UPDATE users SET password='$newHash' WHERE id='$id'");
+
+			echo '<script>';
+			echo 'alert("Password Update Successfull");';
+			
+			echo '</script>';
+			
+		} else {
+			echo '<script>';
+			echo 'alert("Old Password is invalid");';
+			
+			echo '</script>';
+		}
+	}
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // ????

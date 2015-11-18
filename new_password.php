@@ -31,39 +31,35 @@ $user = $_COOKIE['login_user'];
 
         <div class="table-responsive">
         <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>FIRST NAME</th><th>MIDDLE NAME</th><th>LAST NAME</th>
-        <th>EMAIL</th><th>DATE OF BIRTH</th>
-        </tr>
-
-        <?php
-        $user = $_COOKIE["user_id"];
-        print_user_data($user); 
-        ?>
 
         </table>
         </div>
 
-        <a class="btn btn-default" href="change_account_info.php" role="button">Click here to update account information</a>
+        <form action="change_password.php" method="post" onsubmit="return validate_pw_change();">
+          <div class="form-group">
+            <label for="email">Enter Old Password</label>
+              <input type="password" class="form-control" id="oldpass" name='oldpass' placeholder="Old Password">
+          </div>
+
+          <div class="form-group">
+            <label for="year">Enter New Password</label>
+              <input type="password" class="form-control" id="newpass1" name='newpass1' placeholder="New Password">
+          </div>
+
+          <div class="form-group">
+            <label for="year">Confirm New Password</label>
+              <input type="password" class="form-control" id="newpass2" name='newpass2' placeholder="Re-Enter New Password">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
 
         <br></br>
 
-        <a class="btn btn-default" href="new_password.php" role="button">Click here to change password</a>
+        <!--<button type="button" href = "auditor_form_history.php?email='email'?year='year'" class="btn btn-success">Search</button>
+        <a class="btn btn-default" href="auditor_form_history.php?email='email'&year='year'" role="button">Search</a>-->
 
-        <br></br>
-
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Select year to view past form history
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="form_history.php?year=2015">2015</a></li>
-            <li><a href="form_history.php?year=2014">2014</a></li>
-            <li><a href="form_history.php?year=2013">2013</a></li>
-            <li><a href="form_history.php?year=2012">2012</a></li>
-           </ul>
-        </div>
+        
+        
 
       </div>
     </div>

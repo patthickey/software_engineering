@@ -168,6 +168,29 @@ function validate_signup() {
 		}
 }
 
+function validate_pw_change() {
+		
+	
+
+
+		if(newpass1.value!=newpass2.value) {
+			alert("passwords do not match");
+			return false;
+		}
+
+		
+
+
+		else{
+			$.ajax({
+		  	type: 'POST',
+		  	url: 'change_password.php',
+		  	data: {newpass1:newpass1.value, oldpass:oldpass.value},
+		})
+			return true;
+		}
+}
+
 function validate_signin() {
 		var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 		
