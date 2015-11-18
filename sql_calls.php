@@ -919,6 +919,49 @@ session_start();
 	} // this tool is used in all the update tax bracket forms to make the main work universal
 
 
+	function generateRandomString() { //Used to generate new random password when a user forgets their password
+		$length = 8;
+    	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    	$charactersLength = strlen($characters);
+    	$randomString = '';
+    	for ($i = 0; $i < $length; $i++) {
+        	$randomString .= $characters[rand(0, $charactersLength - 1)];
+    	}
+    	return $randomString;
+	}
+	function resetpassword($id) {
+
+		$row = get_user_data($id);
+		$to = $row["email"];
+		$newPassword = generateRandomString();
+		
+		
+		$subject = "Password Reset for IRS Website";
+		$message = "Hello, you recently requested your Password to be reset. Your new password you can log in with is: ";
+		$message .= $newPassword;
+		$headers = 'From: irs.software.project@gmail.com' . "\r\n" .
+		    'Reply-To: irs.software.project@gmail.com' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+		mail($to, $subject, $message, $headers);
+		update_password($id,$newPassword);
+		echo '
+
+		<script>
+			alert("Password successfully reset");
+			
+		</script>
+
+
+		';
+	}
+	function update_password($id,$password){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+
+		$sql1 = mysql_query("UPDATE users SET password='$hash' WHERE id='$id'") or die(mysql_error());
+
+	}
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // ????
