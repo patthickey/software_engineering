@@ -3,7 +3,6 @@ session_start();
 include 'sql_calls.php';
 // Set variables from html page
 
-
 $sbiz_name = $_POST['sbiz_name'];
 $street = $_POST['sbiz_street'];
 $aptNo = $_POST['sbiz_aptNo'];
