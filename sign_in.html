@@ -28,16 +28,21 @@
 
         <fieldset class="sign_in">
         <form action="sign_in.php" method="post" onsubmit="return validate_signin();">
-          <legend>sign in</legend>
+          <legend class = "text-left header"><h1>Sign-In</h1></legend>
           
+
+          <div class="panel panel-default">
+            
+            <div class="panel-body">
             <div class="form-group">
-              <label for="email_in">Email Address</label>
-              <input type="email" class="form-control" name="email_in" id="email_in" placeholder="Email">
+              <label for="email_in">E-mail Address</label>
+              <input type="email" class="form-control" name="email_in" id="email_in" placeholder="E-mail Address">
             </div>
             <div class="form-group">
               <label for="password3">Password</label>
               <input type="password" class="form-control" name="password3" id="password3" placeholder="Password">
             </div>
+          
 
         <div class="col-sm-offset-5 col-sm-2 text-center">
          <div class="button-box">
@@ -48,6 +53,9 @@
          </div>
         </div>
           
+          </div>
+        </div>
+      </div>
           
         </form>
         </fieldset>  
