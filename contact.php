@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'sql_calls.php';
+//$year = $_GET["year"];
+//$email = $_GET["email"];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,41 +30,17 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <fieldset class="sign_in">
-        <form action="sign_in.php" method="post" onsubmit="return validate_signin();">
-          <legend class = "text-left header"><h1>Sign-In</h1></legend>
-          
-
-          <div class="panel panel-default">
-            
-            <div class="panel-body">
-            <div class="form-group">
-              <label for="email_in">E-mail Address</label>
-              <input type="email" class="form-control" name="email_in" id="email_in" placeholder="E-mail Address">
-            </div>
-            <div class="form-group">
-              <label for="password3">Password</label>
-              <input type="password" class="form-control" name="password3" id="password3" placeholder="Password">
-            </div>
-          
-
-        <div class="col-sm-offset-5 col-sm-2 text-center">
-         <div class="button-box">
-          <button type="submit" class="btn btn-default">Submit</button>
-          <br>
-          <br>
-          <a href = "http://project.patthickey.com/forgot_password.html">Forgot Password</a>
-         </div>
-        </div>
-          
-          </div>
-        </div>
-      </div>
-          
-        </form>
-        </fieldset>  
-
-
+                
+        <?php
+        $fname = $_POST['fname'];
+        $email = $_POST['email'];
+        $lname = $_POST['lname'];
+        $msg = $_POST['message'];
+        $phone = $_POST['phone'];
+        
+        
+        contact_us($fname,$lname,$email,$phone,$msg); 
+        ?>
 
       </div>
     </div>
@@ -86,5 +66,6 @@
         $("#footerfile").load("footer.html"); 
       });
     </script>
+
   </body>
 </html>

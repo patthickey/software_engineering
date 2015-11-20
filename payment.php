@@ -51,8 +51,11 @@ public function addTaxPayment($pay){
 	$this -> pay = $pay;
 	}
 }
+echo getCartContentAsHtml();
+echo $pp-> getCheckOutForm();
 
-<ul id = "cart">
+
+/*<ul id = "cart">
 	<li class = "cartitem"> Refund </li>
 </ul>
 
@@ -74,6 +77,7 @@ public function addTaxPayment($pay){
 	<div id = "pay" class = "itemwrap">
 		<input name = "pay" value = "Amount Due" type = "hidden">
 	</div>
-	</form>
+</form>
+*/
 
-?php>
+?>

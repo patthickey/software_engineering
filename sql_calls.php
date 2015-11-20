@@ -182,6 +182,28 @@ session_start();
 		mail($to, $subject, $message, $headers);
 	}
 
+	function contact_us($fname, $lname,$email,$phone,$message) {
+
+		$to = 'irs.software.project@gmail.com';
+		$subject = 'Contact form from ';
+		$subject .= $fname;
+		$subject .= " ";
+		$subject .= $lname;
+		$subject .= ". Phone: ";
+		$subject .= $phone;
+		$headers = "From: '$email'" . "\r\n" .
+		    'Reply-To: irs.software.project@gmail.com' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+		echo $to;
+		mail($to,$subject,$message,$headers);
+
+		echo '<script>';
+		echo 'alert("Thank you for your feedback");';
+		echo 'location.href="index.html"';
+		echo '</script>';
+
+	}
+
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // PRINT TAX BRACKETS
