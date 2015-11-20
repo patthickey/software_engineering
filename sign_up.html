@@ -27,30 +27,32 @@
       <div class="col-md-10 col-md-offset-1">
 
         <form action="sign_up.php" method="post" onsubmit="return validate_signup();">
-          <legend>sign up</legend>
+          <legend><h1>Sign-Up</h1></legend>
+          <div class="panel panel-default">
+          <div class="panel-body">
           <div class="form-group">
-            <label for="email_up">Email Address</label>
-            <input type="email" class="form-control" name="email_up" id="email_up" placeholder="Email">
+            <label for="email_up">E-mail Address</label>
+            <input type="email" class="form-control" name="email_up" id="email_up" placeholder="E-mail Address">
           </div>
           <div class="form-group">
             <label for="password1">Password</label>
             <input type="password" class="form-control" name="password1" id="password1" placeholder="Password">
           </div>
           <div class="form-group">
-            <label for="password2">Retype Password</label>
-            <input type="password" class="form-control" name="password2" id="password2" placeholder="Retype assword">
+            <label for="password2">Confirm Password</label>
+            <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password">
           </div>
           <div class="form-group">
             <label for="first_name">First Name</label>
-            <input type="string" class="form-control" name="first_name" id="first_name" placeholder="First name">
+            <input type="string" class="form-control" name="first_name" id="first_name" placeholder="First Name">
           </div>
           <div class="form-group">
             <label for="middle_name">Middle Name</label>
-            <input type="string" class="form-control" name="middle_name" id="middle_name" placeholder="Middle name">
+            <input type="string" class="form-control" name="middle_name" id="middle_name" placeholder="Middle Name">
           </div>
           <div class="form-group">
             <label for="last_name">Last Name</label>
-            <input type="string" class="form-control" name="last_name" id="last_name" placeholder="Last name">
+            <input type="string" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
           </div>
           <div class="form-group">
             <label for="SSN">Social Security Number</label>
@@ -59,9 +61,13 @@
           </div>
           <div class="form-group">
             <label for="d_o_b">Date of Birth</label>
-            <input type="date" class="form-control" name="d_o_b" id="d_o_b" placeholder="Date of birth">
+            <input type="date" class="form-control" name="d_o_b" id="d_o_b" placeholder="Date of Birth">
           </div>
+          <div class="col-sm-offset-5 col-sm-2 text-center">
           <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+        </div>
         </form>
 
       </div>
