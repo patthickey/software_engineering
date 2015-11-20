@@ -19,6 +19,7 @@
     <![endif]-->
   </head>
 
+
   <body>
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
@@ -26,87 +27,91 @@
       <div class="col-md-10 col-md-offset-1">
 
 
-        <form action="small_business_form.php" method="post" onsubmit="">
-          <!-- Title of the Form document-->
-          <h1>Form 1120 <small>Small Business State Income Tax Return</small></h1>
+      <div = "container-fluid">
+      <!-- Title of the Form document-->
+      <h1>Form 1120 - W</h1>
+      <div class = "line-separator"></div>
+      <hr width="99%" size="10" align="left">
+      <br>
 
-          <hr>
-          <h2>Name</h2>
-          <div class="form-group">
-            <label for="sbiz_name">Small Business Name</label>
-            <input type="text" class="form-control" name="sbiz_name" id="sbiz_name" placeholder="Name">
-          </div>
+      <!-- Corp -->
+       <div class="panel panel-default">
+       <div class="panel-heading"><h2>Estimated Tax for Small Business<h2></div>
+       <div class="panel-body">
+         <div class = "form-group">
+          <h2><small>Small Business Information</small></h2>
 
-          <hr>
-          <h2>Small Business Address</h2>
+          <label for ="CoName">Name of Business/Company </label>
+          <input type = "text" class = "form-control" id="CoName" placeholder ="Corporation/Company Name">
+        </div>
+
+        <div class = "form-group">
+          <label for ="CoAddress">Address </label>
+          <input type = "text" class = "form-control" id="CoAddress" placeholder ="Company Address">
+        </div> 
+
+        <div class = "form-group">
+          <label for ="poBox"> P.O. BOX (if Needed) </label>
+          <input type = "text" class = "form-control" id="poBox" placeholder ="PO Box Number">
+        </div>
+
+        <div class = "form-group">
+          <label for = "State">State</label>
+          <input type = "text" class = "form-control" id="State" placeholder = "State">
+         </div>
+
+         <div class = "form-group">
+          <label for = "ZIP">Zip Code</label>
+          <input type = "number" class = "form-control" id="ZIP" placeholder = "00000">
+         </div>
+      <br>
+
+      <div class = "row">
+        <div class = "col-xs-6 col-sm-4">
           <div class = "form-group">
-            <label for ="indiv_street">Small Business Address (Number and Street)</label>
-            <input type = "text" class = "form-control" name="sbiz_street" id="sbiz_street" placeholder ="Small Business Address">
+           <label for = "Number of Employees"> Number of Employees </label>
+           <input type = "number" class = "form-control" id = "emply">
           </div>
+        </div>
+      </div>
+   
 
-          <div class = "form-group">
-            <label for = "sbiz_aptNo"> Apartment Number </label>
-            <input type = "number" class = "form-control" name= "sbiz_aptNo" id= "sbiz_aptNo" placeholder ="Apt No.">
+
+      <h2><small>Income Information</small></h2>
+      <form class = "form-group">
+        <div class = "row">
+          <div class = "col-xs-6 col-sm-4">
+            <div class = "form-group">
+              <label for = "Gross Income">Enter Total Income</label>
+              <input type = "number" class = "form-control" id = "gross" placeholder = "Gross Income">
+            </div>
           </div>
-       
-          <div class = "form-group">
-            <label for = "sbiz_city"> City or Town</label>
-            <input type = "text" class = "form-control" name = "sbiz_city" id = "sbiz_city" placeholder = "City or Town">
-          </div>
+        </div>
+      </form>
 
-          <div class = "form-group">
-            <label for = "sbiz_state"> State</label>
-            <input type = "text" class = "form-control" name = "sbiz_state" id = "sbiz_state" placeholder = "State">
-          </div>
+      <!--User Signature, Date, Occupation, and Submit Form Button -->
+      <h2><small>Signature</small></h2>
+        <div class="form-group">
+          <label for="Signature">Signature</label>
+          <input type="text" class="form-control" id="exampleSignature" placeholder="Signature">
+        </div>
+        <div class="form-group">
+          <label for="exampleOccupation">Title of Signee</label>
+          <input type="text" class="form-control" id="exampleTitle" placeholder="Title of Signee">
+        </div>
+        <br>
 
-          <div class = "form-group">
-            <label for = "sbiz_zipcode"> Zip Code</label>
-            <input type = "text" class = "form-control" name = "sbiz_zipcode" id = "sbiz_zipcode" placeholder = "Zipcode" onKeyDown="textCounter(this,'message_count',5);" onKeyUp="textCounter(this,'message_count',5)">
-          </div>
-
-          <hr>
-          <h2>Owner's Information</h2>
-
-          <div class="form-group">
-            <label for="sbiz_owner_02">Co-Owner's Email (Must be registered on site)</label>
-            <input type="email" class="form-control" name="sbiz_owner_02" id="sbiz_owner_02" placeholder="Co-Owner Email">
-          </div>
-
-          <hr>
-          <h2>Business Type</h2>
-
-          <div class="form-group">
-            <select class="form-control" name="sbiz_business_type" id="sbiz_business_type">
-              <option value="Sports">Sports</option>        
-              <option value="Health">Health</option>
-              <option value="Food">Food</option>
-              <option value="Apperal">Apperal</option>
-              <option value="Law">Law</option> 
-              <option value="Nonprofit">Non-profit</option>                      
-            </select>
-          </div>   
+      <!-- Submit And Clear Form -->
+      <div class="col-sm-offset-5 col-sm-2 text-center">
+        <div class="button-box">
+          <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+          <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
+        </div>
+       </div>
+      </div>
+    </div> 
 
 
-          <div class = "form-group">
-            <label for = "sbiz_income"> Enter Total Wages, Salaries, Tips, etc.</label>
-            <input type = "number" class = "form-control" name = "sbiz_income" id = "sbiz_income" placeholder = "Wages, Salaries, Tips, etc.">
-          </div>
-
-
-          <hr>
-          <h2>Sigature</h2>
-
-          <div class="form-group">
-            <input type="text" class="form-control" name="sbiz_signature" id="sbiz_signature" placeholder="Signature">
-          </div>
-
-          <hr>
-
-          <div class="button-box">
-            <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
-            <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
-          </div>
-        </form> 
       
       </div>
     </div>
