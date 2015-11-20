@@ -29,17 +29,21 @@
 
         <form action="commercial_form.php" method="post" onsubmit="">
           <!-- Title of the Form document-->
-          <h1>Form 1120 <small>Commercial State Income Tax Return</small></h1>
-
+          <h1>Form 1120-W</h1>
           <hr>
-          <h2>Name</h2>
+
+          <div class="panel panel-default">
+          <div class="panel-heading"><h2>Estimated Tax for Commercial Business<h2></div>
+          <div class="panel-body">
+          
+          <h2><small>Name</small></h2>
           <div class="form-group">
-            <label for="comm_name">commoration Name</label>
+            <label for="comm_name">Commercial Name</label>
             <input type="text" class="form-control" name="comm_name" id="comm_name" placeholder="Name">
           </div>
 
           <hr>
-          <h2>Commercial Address</h2>
+          <h2><small>Commercial Address</small></h2>
           <div class = "form-group">
             <label for ="indiv_street">Commercial Address (Number and Street)</label>
             <input type = "text" class = "form-control" name="comm_street" id="comm_street" placeholder ="Commercial Address">
@@ -62,40 +66,44 @@
 
           <div class = "form-group">
             <label for = "comm_zipcode"> Zip Code</label>
-            <input type = "text" class = "form-control" name = "comm_zipcode" id = "comm_zipcode" placeholder = "Zipcode">
+            <input type = "text" class = "form-control" name = "comm_zipcode" id = "comm_zipcode" placeholder = "Zipcode" onKeyDown="textCounter(this,'message_count',5);" onKeyUp="textCounter(this,'message_count',5)">
           </div>
 
           <hr>
-          <h2>Owner's Information</h2>
+          <h2><small>Owner's Information</small/></h2>
 
           <div class="form-group">
             <label for="comm_owner_02">Co-Owner's Email (Must be registered on site)</label>
-            <input type="email" class="form-control" name="comm_owner_02" id="comm_owner_02" placeholder="Co-Owner Email">
+            <input type="email" class="form-control" name="comm_owner_02" id="comm_owner_02" placeholder="Co-Owner's Email">
           </div>
 
           <hr>
-          <h2>Business Type</h2>
+          <h2><small>Business Type & Income</small></h2>
 
           <div class="form-group">
             <select class="form-control" name="comm_business_type" id="comm_business_type">
               <option value="Sports">Sports</option>        
               <option value="Health">Health</option>
               <option value="Food">Food</option>
-              <option value="Apperal">Apperal</option>
+              <option value="Apperal">Apparel</option>
               <option value="Law">Law</option> 
-              <option value="Nonprofit">Non-profit</option>                      
+              <option value="Nonprofit">Non-Profit</option>                      
             </select>
           </div>   
 
 
           <div class = "form-group">
-            <label for = "comm_income"> Enter Total Wages, Salaries, Tips, etc.</label>
-            <input type = "number" class = "form-control" name = "comm_income" id = "comm_income" placeholder = "Wages, Salaries, Tips, etc.">
+            <div class = "row">
+              <div class = "col-xs-6 col-sm-4">
+                <label for = "comm_income"> Enter Total Income </label>
+                <input type = "number" class = "form-control" name = "comm_income" id = "comm_income" placeholder = "Gross Income">
+              </div>
+            </div>
           </div>
 
 
           <hr>
-          <h2>Sigature</h2>
+          <h2><small>Signature</small></h2>
 
           <div class="form-group">
             <input type="text" class="form-control" name="comm_signature" id="comm_signature" placeholder="Signature">
@@ -103,12 +111,19 @@
 
           <hr>
 
+          <!-- Submit And Clear Form -->
+          <div class="col-sm-offset-5 col-sm-2 text-center">
           <div class="button-box">
             <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
             <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
           </div>
-        </form>    
+          </div>
+          </div>
+         </div>
+         </div>
+         </form>    
 
+         
 
       </div>
     </div>

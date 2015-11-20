@@ -28,9 +28,13 @@
 
         <form action="indiv_form.php" method="post" onsubmit="">
           <!-- Title of the Form document-->
-          <h1>Form 1040 <small>Individual State Income Tax Return</small></h1>
+          <h1>Form 1040</h1>
           <hr>
-          <h2>Home Address</h2>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"><h2>Individual State Income Tax Return<h2></div>
+             <div class="panel-body">
+          <h2><small>Home Address</small></h2>
           <!-- Home Address -->
           <div class = "form-group">
             <label for ="indiv_street">Home Address (Number and Street)</label>
@@ -54,11 +58,11 @@
 
           <div class = "form-group">
             <label for = "indiv_zipcode"> Zip Code</label>
-            <input type = "text" class = "form-control" name = "indiv_zipcode" id = "indiv_zipcode" placeholder = "Zipcode">
+            <input type = "text" class = "form-control" name = "indiv_zipcode" id = "indiv_zipcode" placeholder = "Zipcode" onKeyDown="textCounter(this,'message_count',5);" onKeyUp="textCounter(this,'message_count',5)">
           </div>
 
           <hr>
-          <h2>Work Information</h2>
+          <h2><small>Work Information</small></h2>
 
           <div class="form-group">
             <label for="indiv_occupation">Occupation</label>
@@ -71,7 +75,7 @@
           </div>
 
           <hr>
-          <h2>Filing Status</h2>
+          <h2><small>Filing Status</small></h2>
 
           <div class="form-group">
             <select class="form-control" name="indiv_filing_status" id="indiv_filing_status">
@@ -124,7 +128,7 @@
           </div>
 
           <hr>
-          <h2>Sigature</h2>
+          <h2><small>Signature</small></h2>
 
           <div class="form-group">
             <input type="text" class="form-control" name="indiv_signature" id="indiv_signature" placeholder="Signature">
@@ -132,13 +136,19 @@
 
           <hr>
 
+        <!-- Submit And Clear Form -->
+        <div class="col-sm-offset-5 col-sm-2 text-center">
           <div class="button-box">
             <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
             <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
           </div>
-        </form>
+        </div>
+    </div>
+    </div>
+    </div>
+    </form>
 
-      </div>
+    </div>
     </div>
     </div>
     <div id="footerfile"></div>

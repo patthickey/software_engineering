@@ -105,24 +105,23 @@ session_start();
 
 		$email_result = get_email($email);
 		$email_num_rows = mysql_num_rows($email_result);
-
+		
 		$ssn_result = get_ssn($SSN);
 		$ssn_num_rows = mysql_num_rows($ssn_result);	
+		
 
 	// Checking if the email address and adding accordingly, might need to check how that 1 is passed. Can't remember how to pass var
 		if(($email_num_rows == 0)&&($ssn_num_rows == 0)){
-	    	$query = "INSERT INTO users (email, password, first_name, middle_name, last_name, SSN, date_of_birth, privilege, join_date) VALUES ('$email', '$hash', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b','$privilege', '$date')";
+	    	$query = "INSERT INTO users (email, password, first_name, middle_name, last_name, SSN, date_of_birth, privilege, join_date) VALUES ('$email', '$hash', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$privilege', '$date')";
 	    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
-	  	 	showerror();
+	  	 		showerror();
 	  		send_email($email, "sign_up");
-	  		sign_in($email, $password);
 		} else {
 			echo '<script>';
-			echo 'alert("Email or SNN is already registered");';
-			echo 'location.href="index.html"';
+			echo 'alert("Email or SSN is already registered");';
+			echo 'location.href="project.patthickey.com"';
 			echo '</script>';
 		}
-		header('Location:index.html');
 	}
 
 	function sign_in($email, $password)
@@ -174,7 +173,7 @@ session_start();
 	function send_email($email, $message_call)
 	{
 		$to      = $email;
-		$email_info = get_email_info($message_call);
+		$email_info = get_send_email_info($message_call);
 		$subject = $email_info["subject"];
 		$message = $email_info["message"];
 		$headers = 'From: irs.software.project@gmail.com' . "\r\n" .
@@ -589,17 +588,17 @@ session_start();
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
-// CORPORATE TAX FORMS
+// COMMERCIAL TAX FORMS
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-	function corporate_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	function commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
 	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$owner_02_id = get_id($owner_02_email);
 
-		$tax_rate = get_corporate_tax_rate($income);
+		$tax_rate = get_commercial_tax_rate($income);
 		$tax_rate = $tax_rate / 100;
 		$amount_due = $tax_rate * $income;
 
@@ -608,7 +607,7 @@ session_start();
   	 		showerror();	
 	}
 
-	function get_corporate_tax_rate($income){	
+	function get_commercial_tax_rate($income){	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
@@ -625,6 +624,43 @@ session_start();
 		return "ERROR 01!"; 
 	}
 
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// SMALL BUSINESS TAX FORMS
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+	function small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$owner_02_id = get_id($owner_02_email);
+
+		$tax_rate = get_small_business_tax_rate($income);
+		$tax_rate = $tax_rate / 100;
+		$amount_due = $tax_rate * $income;
+
+    	$query = "INSERT INTO smallbiz_form VALUES ('$owner_01_id', '$owner_02_id', '$sbiz_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();	
+	}
+
+	function get_small_business_tax_rate($income){	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+        $sql = "SELECT tax_rate, income_low, income_high FROM smallbiz__brackets";
+        $result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+			$low = $row["income_low"];
+			$high = $row["income_high"];
+			
+			if (($low <= $income) && ($high >= $income))
+				return $row["tax_rate"];
+		}
+
+		return "ERROR 01!"; 
+	}
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
