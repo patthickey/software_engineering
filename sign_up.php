@@ -8,11 +8,12 @@ $hash = password_hash($password1, PASSWORD_DEFAULT);
 $first_name = $_POST['first_name'];
 $middle_name = $_POST['middle_name'];
 $last_name = $_POST['last_name'];
-$SSN = $_POST['SSN'];
+$SSN = $_POST['sign_up_SSN'];
 $d_o_b = $_POST['d_o_b'];
 $date = date('Y-m-d');
 $privilege = 1; 
-	
-	sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date);
 
+	sign_up($email_up, $hash, $first_name, $middle_name, $last_name, $SSN, $d_o_b, $privilege, $date);
+	sign_in($email_up, $password1);
+	
 ?>
