@@ -154,6 +154,87 @@ session_start();
 		}
 	}
 
+
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// PASSWORD RESET
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+
+	function generateRandomString() { //Used to generate new random password when a user forgets their password
+		$length = 8;
+    	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    	$charactersLength = strlen($characters);
+    	$randomString = '';
+    	for ($i = 0; $i < $length; $i++) {
+        	$randomString .= $characters[rand(0, $charactersLength - 1)];
+    	}
+    	return $randomString;
+	}
+	function resetpassword($id) {
+
+		$row = get_user_data($id);
+		$to = $row["email"];
+		$newPassword = generateRandomString();
+		
+		
+		$subject = "Password Reset for IRS Website";
+		$message = "Hello, you recently requested your Password to be reset. Your new password you can log in with is: ";
+		$message .= $newPassword;
+		$headers = 'From: irs.software.project@gmail.com' . "\r\n" .
+		    'Reply-To: irs.software.project@gmail.com' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+		mail($to, $subject, $message, $headers);
+		update_password($id,$newPassword);
+		echo '
+
+		<script>
+			alert("Password successfully reset");
+			
+		</script>
+
+
+		';
+	}
+	function update_password($id,$password){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+
+		$sql1 = mysql_query("UPDATE users SET password='$hash' WHERE id='$id'") or die(mysql_error());
+
+	}
+
+	function change_password($id, $oldPassword, $newPassword)
+	{
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+	
+		
+		
+		$hash = get_PW($id); 
+
+		//Unhashing the password to see if it matches what was entered.
+		if (password_verify($oldPassword, $hash)) {
+			
+			$newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+			$sql1 = mysql_query("UPDATE users SET password='$newHash' WHERE id='$id'");
+
+			echo '<script>';
+			echo 'alert("Password Update Successfull");';
+			
+			echo '</script>';
+			
+		} else {
+			echo '<script>';
+			echo 'alert("Old Password is invalid");';
+			
+			echo '</script>';
+		}
+	}
+
+
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // SENDING A MESSAGE
@@ -214,7 +295,7 @@ session_start();
 	function print_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM tax_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_individual_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
@@ -232,7 +313,7 @@ session_start();
 	function print_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_commercial_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
@@ -247,7 +328,7 @@ session_start();
 	function print_smallbiz_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM smallbiz_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_smallbiz_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
@@ -416,7 +497,7 @@ session_start();
 		
 		
 		$year = $year +
-		$sql = "SELECT * FROM individual_forms WHERE id='$id' AND sig_date LIKE '$year'";
+		$sql = "SELECT * FROM state_individual_form WHERE id='$id' AND sig_date LIKE '$year'";
 		$result = mysql_query($sql);
 		$row = @ mysql_fetch_array($result);
 		echo'<form name="update_form" method="post" action="">';
@@ -522,7 +603,7 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 
 
-	function individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
+	function state_individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
 	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
@@ -533,32 +614,32 @@ session_start();
 		$SSN = $user["SSN"];
 		$d_o_b = $user["date_of_birth"];
 
-		$tax_rate = get_individual_tax_rate($filing_status, $wages);
+		$tax_rate = get_state_individual_tax_rate($filing_status, $wages);
 		$tax_rate = $tax_rate / 100;
 		$amount_due = $tax_rate * $wages;
 
-    	$query = "INSERT INTO individual_forms VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$occupation', '$wages', '$filing_status', '$sp_f_name', '$sp_m_name', '$sp_l_name', '$sp_ssn', '$signature', '$sig_date', '$amount_due')";
+    	$query = "INSERT INTO state_individual_form VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$occupation', '$wages', '$filing_status', '$sp_f_name', '$sp_m_name', '$sp_l_name', '$sp_ssn', '$signature', '$sig_date', '$amount_due')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();	
 	}
 
-	function individual_tax_form_dependents($id, $first_name, $last_name, $ssn, $relation){
+	function state_individual_tax_form_dependents($id, $first_name, $last_name, $ssn, $relation){
 	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
-    	$query = "INSERT INTO individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
+    	$query = "INSERT INTO state_individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
 	}
 
-	function get_individual_tax_rate($filing_status, $wages){	
+	function get_state_individual_tax_rate($filing_status, $wages){	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		switch ($filing_status) {
 			
 		    case 1:
-		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM tax_brackets";
+		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM state_individual_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
 					$low = $row["single_filer_low"];
@@ -569,7 +650,7 @@ session_start();
 				}
 		        break;
 		    case 2:
-		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM tax_brackets";
+		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM state_individual_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
 					$low = $row["married_filing_together_low"];
@@ -580,7 +661,7 @@ session_start();
 				}
 		        break;
 		    case 3:
-		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM tax_brackets";
+		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM state_individual_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
 					$low = $row["married_filing_seperate_low"];
@@ -591,7 +672,7 @@ session_start();
 				}
 		        break;
 		    case 4:
-		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM tax_brackets";
+		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM state_individual_brackets";
 		        $result = mysql_query($sql);
 				while ($row = @ mysql_fetch_array($result)) {
 					$low = $row["head_of_household_low"];
@@ -614,26 +695,26 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-	function commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	function state_commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
 	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$owner_02_id = get_id($owner_02_email);
 
-		$tax_rate = get_commercial_tax_rate($income);
+		$tax_rate = get_state_commercial_tax_rate($income);
 		$tax_rate = $tax_rate / 100;
 		$amount_due = $tax_rate * $income;
 
-    	$query = "INSERT INTO commercial_form VALUES ('$owner_01_id', '$owner_02_id', '$comm_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
+    	$query = "INSERT INTO state_commercial_form VALUES ('$owner_01_id', '$owner_02_id', '$comm_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();	
 	}
 
-	function get_commercial_tax_rate($income){	
+	function get_state_commercial_tax_rate($income){	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
-        $sql = "SELECT tax_rate, income_low, income_high FROM commercial_brackets";
+        $sql = "SELECT tax_rate, income_low, income_high FROM state_commercial_brackets";
         $result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 			$low = $row["income_low"];
@@ -652,22 +733,22 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-	function small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	function state_small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
 	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$owner_02_id = get_id($owner_02_email);
 
-		$tax_rate = get_small_business_tax_rate($income);
+		$tax_rate = get_state_small_business_tax_rate($income);
 		$tax_rate = $tax_rate / 100;
 		$amount_due = $tax_rate * $income;
 
-    	$query = "INSERT INTO smallbiz_form VALUES ('$owner_01_id', '$owner_02_id', '$sbiz_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
+    	$query = "INSERT INTO state_smallbiz_form VALUES ('$owner_01_id', '$owner_02_id', '$sbiz_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();	
 	}
 
-	function get_small_business_tax_rate($income){	
+	function get_state_small_business_tax_rate($income){	
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
@@ -753,7 +834,7 @@ session_start();
 	function update_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM tax_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_individual_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		$ids_array = array();
 		echo'<form name="update_tax_brackets" method="post" action=""';
@@ -806,7 +887,7 @@ session_start();
 
 				if( $_POST["update_tax_rate"][$i] != NULL) {
 					$tax_rate = $_POST["update_tax_rate"][$i];
-					$sql1 = mysql_query("UPDATE tax_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+					$sql1 = mysql_query("UPDATE state_individual_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
 				}
 
 				if($_POST["update_single_filer_high"][$i] != NULL) {
@@ -815,7 +896,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("tax_brackets", "single_filer_low", "single_filer_high", $update, $value, $test);
+					update_tax_brackets("state_individual_brackets", "single_filer_low", "single_filer_high", $update, $value, $test);
 				}
 
 				if($_POST["update_married_filing_together_high"][$i] != NULL) {
@@ -824,7 +905,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("tax_brackets", "married_filing_together_low", "married_filing_together_high", $update, $value, $test);
+					update_tax_brackets("state_individual_brackets", "married_filing_together_low", "married_filing_together_high", $update, $value, $test);
 				}
 
 				if($_POST["update_married_filing_seperate_high"][$i] != NULL) {
@@ -833,7 +914,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("tax_brackets", "married_filing_seperate_low", "married_filing_seperate_high", $update, $value, $test);
+					update_tax_brackets("state_individual_brackets", "married_filing_seperate_low", "married_filing_seperate_high", $update, $value, $test);
 				}
 
 				if($_POST["update_head_of_household_high"][$i] != NULL) {
@@ -842,7 +923,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("tax_brackets", "update_head_of_household_low", "update_head_of_household_high", $update, $value, $test);
+					update_tax_brackets("state_individual_brackets", "update_head_of_household_low", "update_head_of_household_high", $update, $value, $test);
 				}
 
 				$i++;
@@ -854,7 +935,7 @@ session_start();
 	function update_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM commercial_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_commercial_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		$ids_array = array();
 		echo'<form name="update_tax_brackets" method="post" action=""';
@@ -889,7 +970,7 @@ session_start();
 
 				if( $_POST["update_com_tax_rate"][$i] != NULL) {
 					$tax_rate = $_POST["update_com_tax_rate"][$i];
-					$sql1 = mysql_query("UPDATE commercial_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+					$sql1 = mysql_query("UPDATE state_commercial_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
 				}
 
 				if($_POST["update_com_income_high"][$i] != NULL) {
@@ -898,7 +979,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("commercial_brackets", "income_low", "income_high", $update, $value, $test);
+					update_tax_brackets("state_commercial_brackets", "income_low", "income_high", $update, $value, $test);
 				}
 
 				$i++;
@@ -909,7 +990,7 @@ session_start();
 	function update_smallbiz_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
-		$sql = "SELECT * FROM smallbiz_brackets ORDER BY tax_rate ASC";
+		$sql = "SELECT * FROM state_smallbiz_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		$ids_array = array();
 		echo'<form name="update_tax_brackets" method="post" action=""';
@@ -944,7 +1025,7 @@ session_start();
 
 				if( $_POST["update_biz_tax_rate"][$i] != NULL) {
 					$tax_rate = $_POST["update_biz_tax_rate"][$i];
-					$sql1 = mysql_query("UPDATE smallbiz_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+					$sql1 = mysql_query("UPDATE state_smallbiz_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
 				}
 
 				if($_POST["update_biz_income_high"][$i] != NULL) {
@@ -953,7 +1034,7 @@ session_start();
 						$test = 0;
 					else
 						$test = 1;				
-					update_tax_brackets("smallbiz_brackets", "income_low", "income_high", $update, $value, $test);
+					update_tax_brackets("state_smallbiz_brackets", "income_low", "income_high", $update, $value, $test);
 				}
 
 				$i++;
@@ -976,92 +1057,17 @@ session_start();
 		}
 	} // this tool is used in all the update tax bracket forms to make the main work universal
 
-
-	function generateRandomString() { //Used to generate new random password when a user forgets their password
-		$length = 8;
-    	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    	$charactersLength = strlen($characters);
-    	$randomString = '';
-    	for ($i = 0; $i < $length; $i++) {
-        	$randomString .= $characters[rand(0, $charactersLength - 1)];
-    	}
-    	return $randomString;
-	}
-	function resetpassword($id) {
-
-		$row = get_user_data($id);
-		$to = $row["email"];
-		$newPassword = generateRandomString();
-		
-		
-		$subject = "Password Reset for IRS Website";
-		$message = "Hello, you recently requested your Password to be reset. Your new password you can log in with is: ";
-		$message .= $newPassword;
-		$headers = 'From: irs.software.project@gmail.com' . "\r\n" .
-		    'Reply-To: irs.software.project@gmail.com' . "\r\n" .
-		    'X-Mailer: PHP/' . phpversion();
-		mail($to, $subject, $message, $headers);
-		update_password($id,$newPassword);
-		echo '
-
-		<script>
-			alert("Password successfully reset");
-			
-		</script>
-
-
-		';
-	}
-	function update_password($id,$password){
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-		$hash = password_hash($password, PASSWORD_DEFAULT);
-
-		$sql1 = mysql_query("UPDATE users SET password='$hash' WHERE id='$id'") or die(mysql_error());
-
-	}
-
-	function change_password($id, $oldPassword, $newPassword)
-	{
-		if ($GLOBALS['$connected'] == False) 
-			connect_to_db();
-	
-		
-		
-		$hash = get_PW($id); 
-
-		//Unhashing the password to see if it matches what was entered.
-		if (password_verify($oldPassword, $hash)) {
-			
-			$newHash = password_hash($newPassword, PASSWORD_DEFAULT);
-
-			$sql1 = mysql_query("UPDATE users SET password='$newHash' WHERE id='$id'");
-
-			echo '<script>';
-			echo 'alert("Password Update Successfull");';
-			
-			echo '</script>';
-			
-		} else {
-			echo '<script>';
-			echo 'alert("Old Password is invalid");';
-			
-			echo '</script>';
-		}
-	}
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // ????
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // ????
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ $income = $_POST['comm_income'];
 $signature = $_POST['comm_signature'];
 $date = date('Y-m-d');
 
-commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
+	state_commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
 
 	header("Location: http://project.patthickey.com");
 	die();

@@ -16,7 +16,7 @@ $income = $_POST['sbiz_income'];
 $signature = $_POST['sbiz_signature'];
 $date = date('Y-m-d');
 
-small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
+	state_small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
 
 
 	header("Location: http://project.patthickey.com");

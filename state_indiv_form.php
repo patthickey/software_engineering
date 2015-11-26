@@ -26,9 +26,9 @@ $dep_relation = $_POST['indiv_dep_relation'];
 $signature = $_POST['indiv_signature'];
 $date = date('Y-m-d');
 
-	individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date);
+	state_individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date);
 	if ($filing_status == 4)
-		individual_tax_form_dependents($id, $dep_f_name, $dep_l_name, $dep_ssn, $dep_relation);
+		state_individual_tax_form_dependents($id, $dep_f_name, $dep_l_name, $dep_ssn, $dep_relation);
 
 	header("Location: http://project.patthickey.com");
 	die();
