@@ -292,7 +292,7 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 
 
-	function print_individual_tax_brackets(){
+	function print_state_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_individual_brackets ORDER BY tax_rate ASC";
@@ -310,7 +310,7 @@ session_start();
 		}				
 	}
 
-	function print_commercial_tax_brackets(){
+	function print_state_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_commercial_brackets ORDER BY tax_rate ASC";
@@ -325,10 +325,58 @@ session_start();
 		}				
 	}
 
-	function print_smallbiz_tax_brackets(){
+	function print_state_smallbiz_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_smallbiz_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["tax_rate"]}</td>
+		<td>{$row["income_low"]} to {$row["income_high"]}</td>
+		";
+		echo"</tr>";
+		}				
+	}
+
+	function print_federal_individual_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_individual_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["tax_rate"]}</td>
+		<td>{$row["single_filer_low"]} to {$row["single_filer_high"]}</td>
+		<td>{$row["married_filing_together_low"]} to {$row["married_filing_together_high"]}</td>
+		<td>{$row["married_filing_seperate_low"]} to {$row["married_filing_seperate_high"]}</td>
+		<td>{$row["head_of_household_low"]} to {$row["head_of_household_high"]}</td>
+		";
+		echo"</tr>";
+		}				
+	}
+
+	function print_federal_commercial_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_commercial_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+		echo"<tr>";
+		echo"
+		<td>{$row["tax_rate"]}</td>
+		<td>{$row["income_low"]} to {$row["income_high"]}</td>
+		";
+		echo"</tr>";
+		}				
+	}
+
+	function print_federal_smallbiz_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_smallbiz_brackets ORDER BY tax_rate ASC";
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo"<tr>";
@@ -594,13 +642,23 @@ session_start();
 
   			 ';
 	}
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
+// FILING TAXES
+// -------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// FILING TAXES - STATE
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
-// INDIVIDUAL TAX FORMS
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - STATE - INDIVIDUAL
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
 
 
 	function state_individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
@@ -689,11 +747,11 @@ session_start();
 		return "ERROR 02!"; 
 	}
 
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
-// COMMERCIAL TAX FORMS
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - STATE - COMMERCIAL
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
 
 	function state_commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
 	
@@ -727,11 +785,11 @@ session_start();
 		return "ERROR 01!"; 
 	}
 
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
-// SMALL BUSINESS TAX FORMS
-// -------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - STATE - SMALL BUSINESS
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
 
 	function state_small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
 	
@@ -764,6 +822,182 @@ session_start();
 
 		return "ERROR 01!"; 
 	}
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// FILING TAXES - FEDERAL
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - FEDERAL - INDIVIDUAL
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+
+
+	function federal_individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$user = get_user_data($id);
+		$first_name = $user["first_name"];
+		$middle_name = $user["middle_name"];
+		$last_name = $user["last_name"];
+		$SSN = $user["SSN"];
+		$d_o_b = $user["date_of_birth"];
+
+		$tax_rate = get_federal_individual_tax_rate($filing_status, $wages);
+		$tax_rate = $tax_rate / 100;
+		$amount_due = $tax_rate * $wages;
+
+    	$query = "INSERT INTO federal_individual_form VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$SSN', '$d_o_b', '$street', '$aptNo', '$city', '$state', '$zipcode', '$occupation', '$wages', '$filing_status', '$sp_f_name', '$sp_m_name', '$sp_l_name', '$sp_ssn', '$signature', '$sig_date', '$amount_due')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();	
+	}
+
+	function federal_individual_tax_form_dependents($id, $first_name, $last_name, $ssn, $relation){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+    	$query = "INSERT INTO federal_individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();
+	}
+
+	function get_federal_individual_tax_rate($filing_status, $wages){	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		switch ($filing_status) {
+			
+		    case 1:
+		        $sql = "SELECT tax_rate, single_filer_low, single_filer_high FROM federal_individual_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["single_filer_low"];
+					$high = $row["single_filer_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 2:
+		        $sql = "SELECT tax_rate, married_filing_together_low, married_filing_together_high FROM federal_individual_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["married_filing_together_low"];
+					$high = $row["married_filing_together_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 3:
+		        $sql = "SELECT tax_rate, married_filing_seperate_low, married_filing_seperate_high FROM federal_individual_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["married_filing_seperate_low"];
+					$high = $row["married_filing_seperate_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+		    case 4:
+		        $sql = "SELECT tax_rate, head_of_household_low, head_of_household_high FROM federal_individual_brackets";
+		        $result = mysql_query($sql);
+				while ($row = @ mysql_fetch_array($result)) {
+					$low = $row["head_of_household_low"];
+					$high = $row["head_of_household_high"];
+					
+					if (($low <= $wages) && ($high >= $wages))
+						return $row["tax_rate"];
+				}
+		        break;
+				        
+		    default:
+		        echo "ERROR 01!";
+		}
+		return "ERROR 02!"; 
+	}
+
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - FEDERAL - COMMERCIAL
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+
+	function federal_commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$owner_02_id = get_id($owner_02_email);
+
+		$tax_rate = get_federal_commercial_tax_rate($income);
+		$tax_rate = $tax_rate / 100;
+		$amount_due = $tax_rate * $income;
+
+    	$query = "INSERT INTO federal_commercial_form VALUES ('$owner_01_id', '$owner_02_id', '$comm_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();	
+	}
+
+	function get_federal_commercial_tax_rate($income){	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+        $sql = "SELECT tax_rate, income_low, income_high FROM federal_commercial_brackets";
+        $result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+			$low = $row["income_low"];
+			$high = $row["income_high"];
+			
+			if (($low <= $income) && ($high >= $income))
+				return $row["tax_rate"];
+		}
+
+		return "ERROR 01!"; 
+	}
+
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// FILING TAXES - STATE - SMALL BUSINESS
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+
+	function federal_small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date){
+	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$owner_02_id = get_id($owner_02_email);
+
+		$tax_rate = get_federal_small_business_tax_rate($income);
+		$tax_rate = $tax_rate / 100;
+		$amount_due = $tax_rate * $income;
+
+    	$query = "INSERT INTO federal_smallbiz_form VALUES ('$owner_01_id', '$owner_02_id', '$sbiz_name', '$street', '$aptNo', '$city', '$state', '$zipcode', '$business_type', '$income', '$signature', '$sig_date', '$amount_due')";
+    	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
+  	 		showerror();	
+	}
+
+	function get_federal_small_business_tax_rate($income){	
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+
+        $sql = "SELECT tax_rate, income_low, income_high FROM smallbiz__brackets";
+        $result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+			$low = $row["income_low"];
+			$high = $row["income_high"];
+			
+			if (($low <= $income) && ($high >= $income))
+				return $row["tax_rate"];
+		}
+
+		return "ERROR 01!"; 
+	}
+
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
@@ -831,7 +1065,13 @@ session_start();
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
-	function update_individual_tax_brackets(){
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// UPDATE STATE
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------	
+
+	function update_state_individual_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_individual_brackets ORDER BY tax_rate ASC";
@@ -932,7 +1172,7 @@ session_start();
 
 	}
 
-	function update_commercial_tax_brackets(){
+	function update_state_commercial_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_commercial_brackets ORDER BY tax_rate ASC";
@@ -987,7 +1227,7 @@ session_start();
 		}
 	}
 
-	function update_smallbiz_tax_brackets(){
+	function update_state_smallbiz_tax_brackets(){
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 		$sql = "SELECT * FROM state_smallbiz_brackets ORDER BY tax_rate ASC";
@@ -1041,6 +1281,226 @@ session_start();
 			   }   
 		}
 	}
+
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// UPDATE FEDERAL
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------	
+
+	function update_federal_individual_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_individual_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_tax_rate[]" id="update_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["single_filer_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_single_filer_high[]" id="update_single_filer_high" placeholder='.$row["single_filer_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		<td>{$row["married_filing_together_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_married_filing_together_high[]" id="update_married_filing_together_high" placeholder='.$row["married_filing_together_high"].'>
+  			</div>';
+  		echo"		
+		</td>
+		<td>{$row["married_filing_seperate_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_married_filing_seperate_high[]" id="update_married_filing_seperate_high" placeholder='.$row["married_filing_seperate_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		<td>{$row["head_of_household_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_head_of_household_high[]" id="update_head_of_household_high" placeholder='.$row["head_of_household_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE federal_individual_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_single_filer_high"][$i] != NULL) {
+					$update = $_POST["update_single_filer_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_individual_brackets", "single_filer_low", "single_filer_high", $update, $value, $test);
+				}
+
+				if($_POST["update_married_filing_together_high"][$i] != NULL) {
+					$update = $_POST["update_married_filing_together_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_individual_brackets", "married_filing_together_low", "married_filing_together_high", $update, $value, $test);
+				}
+
+				if($_POST["update_married_filing_seperate_high"][$i] != NULL) {
+					$update = $_POST["update_married_filing_seperate_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_individual_brackets", "married_filing_seperate_low", "married_filing_seperate_high", $update, $value, $test);
+				}
+
+				if($_POST["update_head_of_household_high"][$i] != NULL) {
+					$update = $_POST["update_head_of_household_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_individual_brackets", "update_head_of_household_low", "update_head_of_household_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+
+	}
+
+	function update_federal_commercial_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_commercial_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_com_tax_rate[]" id="update_com_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["income_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_com_income_high[]" id="update_com_income_high" placeholder='.$row["income_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_com_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_com_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE federal_commercial_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_com_income_high"][$i] != NULL) {
+					$update = $_POST["update_com_income_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_commercial_brackets", "income_low", "income_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+	}
+
+	function update_federal_smallbiz_tax_brackets(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM federal_smallbiz_brackets ORDER BY tax_rate ASC";
+		$result = mysql_query($sql);
+		$ids_array = array();
+		echo'<form name="update_tax_brackets" method="post" action=""';
+		while ($row = @ mysql_fetch_array($result)) {	
+		echo"
+		<tr>";
+		//echo'<input type="hidden" name="tax_id[]" value='.$row["id"].' readonly>';
+		$ids_array[] = $row['id'];
+		echo"<td>";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_biz_tax_rate[]" id="update_biz_tax_rate" placeholder='.$row["tax_rate"].'>
+  			</div>';
+		echo"</td>
+		<td> {$row["income_low"]} to ";
+		echo'<div class="form-group">
+    			<input type="number" class="form-control" name="update_biz_income_high[]" id="update_biz_income_high" placeholder='.$row["income_high"].'>
+  			</div>';
+  		echo"
+		</td>
+		</tr>";
+		}	
+		echo'<div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success update_buttons"> 
+		<input type="reset" value="Reset" type="button" class="btn btn-danger update_buttons reset_buttons"></div> 
+		</form>';
+
+		if($_POST["Submit"])
+		{	
+
+			$i = 0;
+			foreach($ids_array as $value)
+		    	{
+
+				if( $_POST["update_biz_tax_rate"][$i] != NULL) {
+					$tax_rate = $_POST["update_biz_tax_rate"][$i];
+					$sql1 = mysql_query("UPDATE federal_smallbiz_brackets SET tax_rate='$tax_rate' WHERE id='$value'") or die(mysql_error());
+				}
+
+				if($_POST["update_biz_income_high"][$i] != NULL) {
+					$update = $_POST["update_biz_income_high"][$i];
+					if($value == end($ids_array))
+						$test = 0;
+					else
+						$test = 1;				
+					update_tax_brackets("federal_smallbiz_brackets", "income_low", "income_high", $update, $value, $test);
+				}
+
+				$i++;
+			   }   
+		}
+	}
+
+
 
 	function update_tax_brackets($table, $low, $high, $update, $value, $test){
 		if ($GLOBALS['$connected'] == False) 

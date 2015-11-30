@@ -41,7 +41,7 @@ include 'sql_calls.php';?>
           <th>HEAD OF HOUSEHOLD</th>
           </tr>
 
-          <?php print_individual_tax_brackets(); ?>
+          <?php print_state_individual_tax_brackets(); ?>
 
           </table>
           </div>
@@ -55,7 +55,7 @@ include 'sql_calls.php';?>
           
           </tr>
 
-          <?php print_commercial_tax_brackets(); ?>
+          <?php print_state_commercial_tax_brackets(); ?>
 
           </table>
           </div>
@@ -69,11 +69,61 @@ include 'sql_calls.php';?>
           
           </tr>
 
-          <?php print_smallbiz_tax_brackets(); ?>
+          <?php print_state_smallbiz_tax_brackets(); ?>
 
           </table>
           </div>
         </div>
+
+
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> FEDERAL </h3>
+
+          <h3> Individual </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>SINGLE FILER</th>
+          <th>MARRIED FILING TOGETHER</th>
+          <th>MARRIED FILING SEPERATE</th>
+          <th>HEAD OF HOUSEHOLD</th>
+          </tr>
+
+          <?php print_federal_individual_tax_brackets(); ?>
+
+          </table>
+          </div>
+
+          <h3> Commercial </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php print_federal_commercial_tax_brackets(); ?>
+
+          </table>
+          </div>
+
+          <h3> Small Business </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php print_federal_smallbiz_tax_brackets(); ?>
+
+          </table>
+          </div>
+        </div>
+
 
       </div>
     </div>

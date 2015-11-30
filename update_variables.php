@@ -27,49 +27,102 @@ include 'sql_calls.php';?>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <h3> Individual </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>SINGLE FILER</th>
-        <th>MARRIED FILING TOGETHER</th>
-        <th>MARRIED FILING SEPERATE</th>
-        <th>HEAD OF HOUSEHOLD</th>
-        </tr>
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> STATE </h3>
+          <h3> Individual </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>SINGLE FILER</th>
+          <th>MARRIED FILING TOGETHER</th>
+          <th>MARRIED FILING SEPERATE</th>
+          <th>HEAD OF HOUSEHOLD</th>
+          </tr>
 
-        <?php update_individual_tax_brackets(); ?>
+          <?php update_state_individual_tax_brackets(); ?>
 
-        </table>
+          </table>
+          </div>
+
+          <h3> Commercial </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php update_state_commercial_tax_brackets(); ?>
+
+          </table>
+          </div>
+
+          <h3> Small Business </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php update_state_smallbiz_tax_brackets(); ?>
+
+          </table>
+          </div>
         </div>
 
-        <h3> Commercial </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>Income</th>
-        
-        </tr>
 
-        <?php update_commercial_tax_brackets(); ?>
 
-        </table>
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> FEDERAL </h3>
+          <h3> Individual </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>SINGLE FILER</th>
+          <th>MARRIED FILING TOGETHER</th>
+          <th>MARRIED FILING SEPERATE</th>
+          <th>HEAD OF HOUSEHOLD</th>
+          </tr>
+
+          <?php update_federal_individual_tax_brackets(); ?>
+
+          </table>
+          </div>
+
+          <h3> Commercial </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php update_federal_commercial_tax_brackets(); ?>
+
+          </table>
+          </div>
+
+          <h3> Small Business </h3>
+          <div class="table-responsive">
+          <table border=1 class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
+
+          <?php update_federal_smallbiz_tax_brackets(); ?>
+
+          </table>
+          </div>
         </div>
 
-        <h3> Small Business </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>Income</th>
-        
-        </tr>
-
-        <?php update_smallbiz_tax_brackets(); ?>
-
-        </table>
-        </div>
 
       </div>
     </div>
