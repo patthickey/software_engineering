@@ -27,48 +27,52 @@ include 'sql_calls.php';?>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <h3> Individual </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>SINGLE FILER</th>
-        <th>MARRIED FILING TOGETHER</th>
-        <th>MARRIED FILING SEPERATE</th>
-        <th>HEAD OF HOUSEHOLD</th>
-        </tr>
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> STATE </h3>
 
-        <?php print_individual_tax_brackets(); ?>
+          <h3> Individual </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>SINGLE FILER</th>
+          <th>MARRIED FILING TOGETHER</th>
+          <th>MARRIED FILING SEPERATE</th>
+          <th>HEAD OF HOUSEHOLD</th>
+          </tr>
 
-        </table>
-        </div>
+          <?php print_individual_tax_brackets(); ?>
 
-        <h3> Commercial </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>Income</th>
-        
-        </tr>
+          </table>
+          </div>
 
-        <?php print_commercial_tax_brackets(); ?>
+          <h3> Commercial </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
 
-        </table>
-        </div>
+          <?php print_commercial_tax_brackets(); ?>
 
-        <h3> Small Business </h3>
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>TAX RATE by %</th>
-        <th>Income</th>
-        
-        </tr>
+          </table>
+          </div>
 
-        <?php print_smallbiz_tax_brackets(); ?>
+          <h3> Small Business </h3>
+          <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+          <tr>
+          <th>TAX RATE by %</th>
+          <th>Income</th>
+          
+          </tr>
 
-        </table>
+          <?php print_smallbiz_tax_brackets(); ?>
+
+          </table>
+          </div>
         </div>
 
       </div>

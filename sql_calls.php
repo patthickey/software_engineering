@@ -355,14 +355,14 @@ session_start();
 		$result = mysql_query($sql);
 		while ($row = @ mysql_fetch_array($result)) {
 		echo'
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">'.$row["question"].'</h3>
-          </div>
-          <div class="panel-body">
-            '.$row["answer"].'
-          </div>
-        </div>
+	        <div class="panel panel-primary">
+	          <div class="panel-heading">
+	            <h3 class="panel-title">'.$row["question"].'</h3>
+	          </div>
+	          <div class="panel-body">
+	            '.$row["answer"].'
+	          </div>
+	        </div>
         ';
 		}
 	}

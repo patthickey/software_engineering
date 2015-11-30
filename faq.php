@@ -26,10 +26,10 @@ include 'sql_calls.php';
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-
-        <?php print_faqs(); ?>
-             
+      <div class="col-md-10 col-md-offset-1 fake-well">
+            <div class="col-md-10 col-md-offset-1">
+              <?php print_faqs(); ?>
+            </div>
       </div>
     </div>
     </div>
