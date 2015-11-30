@@ -29,38 +29,43 @@ $user = $_COOKIE['login_user'];
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> Change Password </h3>
+            <div class="col-md-10 col-md-offset-1">
 
-        </table>
+
+              <div class="table-responsive">
+              <table border=1 class="table table-striped table-condensed">
+
+              </table>
+              </div>
+
+              <form action="change_password.php" method="post" onsubmit="return validate_pw_change();">
+                <div class="form-group">
+                  <label for="email">Enter Old Password</label>
+                    <input type="password" class="form-control" id="oldpass" name='oldpass' placeholder="Old Password">
+                </div>
+
+                <div class="form-group">
+                  <label for="year">Enter New Password</label>
+                    <input type="password" class="form-control" id="newpass1" name='newpass1' placeholder="New Password">
+                </div>
+
+                <div class="form-group">
+                  <label for="year">Confirm New Password</label>
+                    <input type="password" class="form-control" id="newpass2" name='newpass2' placeholder="Re-Enter New Password">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+
+              <br></br>
+
+              <!--<button type="button" href = "auditor_form_history.php?email='email'?year='year'" class="btn btn-success">Search</button>
+              <a class="btn btn-default" href="auditor_form_history.php?email='email'&year='year'" role="button">Search</a>-->
+
+        
+          </div>
         </div>
-
-        <form action="change_password.php" method="post" onsubmit="return validate_pw_change();">
-          <div class="form-group">
-            <label for="email">Enter Old Password</label>
-              <input type="password" class="form-control" id="oldpass" name='oldpass' placeholder="Old Password">
-          </div>
-
-          <div class="form-group">
-            <label for="year">Enter New Password</label>
-              <input type="password" class="form-control" id="newpass1" name='newpass1' placeholder="New Password">
-          </div>
-
-          <div class="form-group">
-            <label for="year">Confirm New Password</label>
-              <input type="password" class="form-control" id="newpass2" name='newpass2' placeholder="Re-Enter New Password">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-
-        <br></br>
-
-        <!--<button type="button" href = "auditor_form_history.php?email='email'?year='year'" class="btn btn-success">Search</button>
-        <a class="btn btn-default" href="auditor_form_history.php?email='email'&year='year'" role="button">Search</a>-->
-
-        
-        
-
       </div>
     </div>
     </div>

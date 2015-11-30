@@ -29,20 +29,26 @@ $search_privilege_level = $_POST['search_privilege_level'];
     <div class="container-fluid"> 
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 fake-well">
+          <div class="col-md-10 col-md-offset-1">
 
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>PRIVILEGE</th><th>NEW PRIVILEGE</th>
-        </tr>
+            <h2 class="text-center"> UPDATE PRIVILEGE </h3>
 
-        <?php
-        admin_update_privilege_level($search_email, $search_privilege_level);
-        ?>
+            <div class="table-responsive">
+            <table border=1 class="table table-striped table-condensed">
+            <tr>
+            <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>PRIVILEGE</th><th>NEW PRIVILEGE</th>
+            </tr>
 
-        </table>
+            <?php
+            admin_update_privilege_level($search_email, $search_privilege_level);
+            ?>
+
+            </table>
+            </div>
+
+          </div>
         </div>
-
       </div>
     </div>
     </div>

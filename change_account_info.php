@@ -30,19 +30,25 @@ $search_email = $_POST['search_email'];
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
-        <tr>
-        <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>DATE OF BIRTH</th>
+        <div class="col-md-12 fake-well">
+          <h2 class="text-center"> Change Account Info </h3>
+            <div class="col-md-10 col-md-offset-1">
 
-        <?php
-        $user = $_COOKIE["user_id"];
-        account_print_user_data($user);
-        ?>
+              <div class="table-responsive">
+              <table border=1 class="table table-striped table-condensed">
+              <tr>
+              <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>DATE OF BIRTH</th>
 
-        </table>
+              <?php
+              $user = $_COOKIE["user_id"];
+              account_print_user_data($user);
+              ?>
+              </tr>
+              </table>
+              </div>
+
+          </div>
         </div>
-
       </div>
     </div>
     </div>

@@ -29,18 +29,19 @@ include 'sql_calls.php';
     <div class="container-fluid"> 
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 fake-well">
 
-                
-        <?php
-        $email = $_POST['email'];
+            <?php
+            $email = $_POST['email'];
 
-        $id = get_id($email);
-        $year = $_POST['year'];
-        
-        
-        get_past_form_data($id, $year); 
-        ?>
+            $id = get_id($email);
+            $year = $_POST['year'];
+            
+            
+            get_past_form_data($id, $year); 
+            ?>
 
+        </div>
       </div>
     </div>
     </div>

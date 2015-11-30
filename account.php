@@ -53,6 +53,38 @@ $user = $_COOKIE['login_user'];
 
           <br></br>
 
+          <a class="btn btn-default" href="make_payment.php" role="button">Make payment</a>
+
+
+          <form action="make_payment.php" method="post" onsubmit="">
+            <!-- Title of the Form document-->
+            <h1>Make Payments</h1>
+
+            <div class="form-group">
+              <select class="form-control" name="form_type" id="form_type">       
+                <option>---</option>
+                <option value="state">State</option>
+                <option value="federal">Federal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <select class="form-control" name="user_type" id="user_type">
+                <option>---</option>        
+                <option value="individual">Individual</option>
+                <option value="commercial">Commercial</option>
+                <option value="small_biz">Small business</option>
+              </select>
+            </div>
+
+            <div class="button-box">
+              <input type="submit" name="Submit" value="Submit"class="btn btn-success"> 
+              <input type="reset" value="Reset" type="button" class="btn btn-danger" style="right:0px">
+            </div>
+
+          </form>
+          <br></br>          
+
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               Select year to view past form history

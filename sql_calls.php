@@ -59,6 +59,17 @@ session_start();
 		return $row["privilege"];
 	}
 
+	function get_password()
+	{		
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$id = $_SESSION['login_user'];
+		$sql = "SELECT password FROM users WHERE id='$id'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row["password"];
+	}	
+
 	function get_name()
 	{
 		if ($GLOBALS['$connected'] == False) 
@@ -87,7 +98,56 @@ session_start();
 		$result = mysql_query($sql);
 		$row = @ mysql_fetch_array($result);
 		return $row["id"];
-	}	
+	}
+
+	function get_balance($user_id, $form_type, $user_type)
+	{
+		switch ($form_type) {
+			case 'state':
+				switch ($user_type) {
+					case 'individual':
+						$form = 'state_individual_form';
+						break;
+					case 'commercial':
+						$form = 'state_commercial_form';
+						break;
+					case 'small_biz':
+						$form = 'state_smallbiz_form';
+						break;											
+					default:
+						# code...
+						break;
+				}
+				break;
+			case 'federal':
+				switch ($user_type) {
+					case 'individual':
+						$form = 'federal_individual_form';
+						break;
+					case 'commercial':
+						$form = 'federal_commercial_form';
+						break;
+					case 'small_biz':
+						$form = 'federal_smallbiz_form';
+						break;											
+					default:
+						# code...
+						break;
+				}
+				break;			
+			default:
+				# code...
+				break;
+		}
+
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT amount_due FROM $form WHERE id='$user_id'";
+		$result = mysql_query($sql);
+		$row = @ mysql_fetch_array($result);
+		return $row["amount_due"];
+	}
+
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
@@ -210,9 +270,7 @@ session_start();
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 	
-		
-		
-		$hash = get_PW($id); 
+		$hash = get_password($id); 
 
 		//Unhashing the password to see if it matches what was entered.
 		if (password_verify($oldPassword, $hash)) {

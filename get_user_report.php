@@ -29,32 +29,29 @@ $user = $_COOKIE['login_user'];
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <div class="table-responsive">
-        <table border=1 class="table table-striped table-condensed">
 
-        </table>
-        </div>
+        <div class="col-md-12 fake-well">
+          <div class="col-md-10 col-md-offset-1"> 
 
-        <form action="privilege_form_history.php" method="post">
-          <div class="form-group">
-            <label for="email">Enter Email Address of User</label>
-              <input type="text" class="form-control" id="email" name='email' placeholder="Email Address">
-          </div>
+            <h2 class="text-center"> ENTER USER INFORMATION </h3>
+            <form action="privilege_form_history.php" method="post">
+              <div class="form-group">
+                <label for="email">Enter Email Address of User</label>
+                  <input type="text" class="form-control" id="email" name='email' placeholder="Email Address">
+              </div>
 
-          <div class="form-group">
-            <label for="year">Enter Year of form submission</label>
-              <input type="text" class="form-control" id="year" name='year' placeholder="Year">
-          </div>
-          <button type="submit" class="btn btn-default">Search</button>
-        </form>
-
-        <br></br>
+              <div class="form-group">
+                <label for="year">Enter Year of form submission</label>
+                  <input type="text" class="form-control" id="year" name='year' placeholder="Year">
+              </div>
+              <button type="submit" class="btn btn-default">Search</button>
+            </form>
 
         <!--<button type="button" href = "auditor_form_history.php?email='email'?year='year'" class="btn btn-success">Search</button>
         <a class="btn btn-default" href="auditor_form_history.php?email='email'&year='year'" role="button">Search</a>-->
 
-        
-        
+          </div>
+        </div>
 
       </div>
     </div>
