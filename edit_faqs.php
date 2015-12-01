@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'sql_calls.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -41,10 +43,22 @@
             </div>
 
          <div class="button-box text-center col-md-10 col-md-offset-1">
-          <button type="submit" class="btn btn-primary-lg">Submit</button>
+          <button type="submit" class="btn btn-success-lg">Submit</button>
          </div>
         </form>
-        </fieldset> 
+        </fieldset>
+        </br>
+
+          <div class="col-md-10 col-md-offset-1">
+            <form action="delete_faqs.php" method="post">
+              <div class="form-group">
+                <select class="form-control" name="delete_faq">          
+                  <?php delete_faqs_list(); ?>
+                </select>
+              </div>                  
+              <div class="button-box"><input type="submit" name="Submit" value="Submit" class="btn btn-success"></div> 
+            </form>
+          </div>
 
       </div>
     </div>

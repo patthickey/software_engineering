@@ -485,6 +485,23 @@ session_start();
 		header('Location:http://project.patthickey.com/faq.php');
 	}
 
+	function delete_faqs_list(){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = "SELECT * FROM faqs";
+		$result = mysql_query($sql);
+		while ($row = @ mysql_fetch_array($result)) {
+			echo'<option value='.$row["id"].'>'.$row["question"].'</option>';     	
+		}
+	}	
+
+	function delete_faqs($delete_faq){
+		if ($GLOBALS['$connected'] == False) 
+			connect_to_db();
+		$sql = mysql_query("DELETE FROM faqs WHERE id='$delete_faq'") or die(mysql_error());
+		header('Location:http://project.patthickey.com/edit_faqs.php');
+
+	}
 
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
@@ -744,7 +761,7 @@ session_start();
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
-    	$query = "INSERT INTO state_individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
+    	$query = "INSERT INTO state_individual_dependents VALUES ('$id', '$first_name', '$last_name', '$ssn', '$relation')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
 	}
@@ -919,7 +936,7 @@ session_start();
 		if ($GLOBALS['$connected'] == False) 
 			connect_to_db();
 
-    	$query = "INSERT INTO federal_individual_dependents VALUES ('$id', '$first_name', '$middle_name', '$last_name', '$ssn', '$relation')";
+    	$query = "INSERT INTO federal_individual_dependents VALUES ('$id', '$first_name', '$last_name', '$ssn', '$relation')";
     	if (!($result = @ mysql_query ($query, $GLOBALS['$connection'])))
   	 		showerror();
 	}

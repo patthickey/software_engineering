@@ -14,7 +14,7 @@ $owner_02_email = $_POST['comm_owner_02'];
 $business_type = $_POST['comm_business_type'];
 $income = $_POST['comm_income'];
 $signature = $_POST['comm_signature'];
-$date = date('Y-m-d');
+$sig_date = date('Y-m-d');
 
 	federal_commercial_tax_form($comm_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
 

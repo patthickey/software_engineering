@@ -24,7 +24,7 @@ $dep_ssn = $_POST['indiv_dep_ssn'];
 $dep_relation = $_POST['indiv_dep_relation'];
 
 $signature = $_POST['indiv_signature'];
-$date = date('Y-m-d');
+$sig_date = date('Y-m-d');
 
 	state_individual_tax_form($id, $street, $aptNo, $city, $state, $zipcode, $occupation, $wages, $filing_status, $sp_f_name, $sp_m_name, $sp_l_name, $sp_ssn, $signature, $sig_date);
 	if ($filing_status == 4)

@@ -14,7 +14,7 @@ $owner_02_email = $_POST['sbiz_owner_02'];
 $business_type = $_POST['sbiz_business_type'];
 $income = $_POST['sbiz_income'];
 $signature = $_POST['sbiz_signature'];
-$date = date('Y-m-d');
+$sig_date = date('Y-m-d');
 
 	federal_small_business_tax_form($sbiz_name, $street, $aptNo, $city, $state, $zipcode, $owner_01_id, $owner_02_email, $business_type, $income, $signature, $date);
 
