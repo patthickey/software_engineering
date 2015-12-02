@@ -604,11 +604,12 @@ session_start();
 
 		    $sql1 = mysql_query("UPDATE users SET first_name = '$fname' , last_name = '$lname' , email = '$email' , date_of_birth = '$date_of_birth'  WHERE id= '$id'") or die(mysql_error());
 		    
-		}   
-		
+		} 
+
 		// redirect user
 		$_SESSION['success'] = 'Updated';
-		header("location:index.php");
+		header("location:index.php");  
+		
 		
 	}
 

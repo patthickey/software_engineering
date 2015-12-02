@@ -1,6 +1,7 @@
 <?php session_start(); 
 include 'sql_calls.php';
 $search_email = $_POST['search_email'];
+
 //$privilege_level = $_POST['privilege_level'];
 ?>
 <!DOCTYPE html>
@@ -24,7 +25,7 @@ $search_email = $_POST['search_email'];
   </head>
 
 
-  <body class="admin_privilege" onload="on_page_load();">
+  <body class="sign_out" onload="on_page_load();">
     <div id="headerfile"></div>   
     <div class="container-fluid"> 
     <div class="row">
