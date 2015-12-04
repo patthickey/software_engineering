@@ -53,8 +53,6 @@ $user = $_COOKIE['login_user'];
 
           <br></br>
 
-          <a class="btn btn-default" href="make_payment.php" role="button">Make payment</a>
-
 
           <form action="make_payment.php" method="post" onsubmit="">
             <!-- Title of the Form document-->
