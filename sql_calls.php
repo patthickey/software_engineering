@@ -702,7 +702,7 @@ session_start();
    					 </div>
   				</div>
   				<div class="form-group">
-   				 <label class="col-sm-2 control-label">Spouse Layne Name</label>
+   				 <label class="col-sm-2 control-label">Spouse Last Name</label>
     				<div class="col-sm-10">
      				 <p class="form-control-static">'.$row["spouse_l_name"].'</p>
    					 </div>
